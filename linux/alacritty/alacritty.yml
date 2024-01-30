@@ -1,5 +1,39 @@
-# Configuration for Alacritty, the GPU enhanced terminal emulator.
-
-# Dracula color theme
 import:
-  - /home/mttchpmn/dotfiles/alacritty/dracula.yml
+  - ~/.config/alacritty/dracula.yml
+
+window.option_as_alt: true
+live_config_reload: true
+
+key_bindings:
+  - { key: N, mods: Alt, chars: "\x1bn" }
+  - { key: P, mods: Alt, chars: "\x1bp" }
+  - { key: H, mods: Alt, chars: "\x1bh" }
+  - { key: L, mods: Alt, chars: "\x1bl" }
+  - { key: K, mods: Alt, chars: "\x1bk" }
+  - { key: J, mods: Alt, chars: "\x1bj" }
+
+window:
+  decorations: full
+  opacity: 0.95
+  dynamic_padding: false
+  padding:
+    x: 6
+    y: 6
+  startup_mode: Maximized
+  title: TERMINAL
+  history: 5000
+
+font:
+  normal:
+    family: 'CaskaydiaCove Nerd Font Mono'
+    style: Regular
+
+  bold:
+    family: 'CaskaydiaCove Nerd Font Mono'
+    style: Bold
+
+  italic:
+    family: 'CaskaydiaCove Nerd Font Mono'
+    style: Italic
+
+  size: 14.0

@@ -1,24 +1,56 @@
--- Read the docs: https://www.lunarvim.org/docs/configuration
--- Example configs: https://github.com/LunarVim/starter.lvim
--- Video Tutorials: https://www.youtube.com/watch?v=sFA9kX-Ud_c&list=PLhoH5vyxr6QqGu0i7tt_XoVK9v-KvZ3m6
--- Forum: https://www.reddit.com/r/lunarvim/
--- Discord: https://discord.com/invite/Xb9B4Ny
--- Example: Adding a new which-key binding
-lvim.builtin.which_key.mappings["P"] = {
-  "<cmd>Telescope projects<CR>",
-  "Projects"
-}
-
--- Example: Changing a vim keybinding
-vim.api.nvim_set_keymap('n', '<New-Key>', '<Command>', { noremap = true, silent = true })
-
--- Remapping 'jk' to Escape in Insert mode
-vim.api.nvim_set_keymap('i', 'jk', '<ESC>', {noremap = true, silent = true})
-
 lvim.plugins = {
 	"Mofiqul/dracula.nvim",
 }
 
 lvim.colorscheme = 'dracula'
 
+-- VIM MAPPINGS ----------
+
 vim.opt.foldmethod = 'indent'
+
+-- Open which-key faster
+vim.opt.timeoutlen = 100
+
+-- Remapping 'jk' to Escape in Insert mode
+lvim.keys.insert_mode["jk"] = "<ESC>"
+
+-- Centers cursor when moving 1/2 page down
+lvim.keys.normal_mode["<C-d>"] = "<C-d>zz"
+
+
+-- Tab Navigation (Alt + n/p)
+lvim.keys.normal_mode["<A-n>"] = ":bnext<CR>"
+lvim.keys.normal_mode["<A-p>"] = ":bprevious<CR>"
+
+-- Pane Navigation (Alt + h/j/k/l)
+lvim.keys.normal_mode["<A-h>"] = "<C-w>h"
+lvim.keys.normal_mode["<A-l>"] = "<C-w>l"
+lvim.keys.normal_mode["<A-k>"] = "<C-w>k"
+lvim.keys.normal_mode["<A-j>"] = "<C-w>j"
+
+-- Easy Visual Indentation
+-- For visual mode, it's a bit different, as lvim.keys.visual_mode is the correct table to use:
+lvim.keys.visual_mode["<"] = "<gv"
+lvim.keys.visual_mode[">"] = ">gv"
+
+-- Execute Macro Saved in 'q' Register
+lvim.keys.normal_mode["qj"] = "@q"
+
+
+
+lvim.builtin.which_key.mappings["P"] = {
+  "<cmd>Telescope projects<CR>",
+  "Projects"
+}
+
+-- Split Vertically
+lvim.builtin.which_key.mappings["v"] = {
+  "<cmd>vsplit<CR>",
+  "Split Vertically"
+}
+
+-- Split Horizontally
+lvim.builtin.which_key.mappings["s"] = {
+  "<cmd>split<CR>",
+  "Split Horizontally"
+}

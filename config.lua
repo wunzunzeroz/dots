@@ -1,5 +1,12 @@
 lvim.plugins = {
 	"Mofiqul/dracula.nvim",
+  {
+    "ggandor/leap.nvim",
+    name = "leap",
+    config = function()
+    require("leap").add_default_mappings()
+    end,
+  },
 }
 
 lvim.colorscheme = 'dracula'

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+headers="x-apikey: X987OIqG6Ga2eAWMuARY8xs5zIOAYqz2"
+
+url="https://api.niwa.co.nz/tides/data?lat=-36.831865&long=174.825968&numberOfDays=1&interval=60"
+
+response=$(curl --silent -H "$headers" "$url")
+
+# Use jq to extract "values", convert times to NZT, and format output
+echo $response | jq -r '.values[] | "\(.time) \(.value)"' | while read -r line; do
+    utc_time=$(echo $line | awk '{print $1}')
+    value=$(echo $line | awk '{print $2}')
+
+    # Convert UTC to NZT (+13 hours for daylight saving or +12 otherwise). Adjust for DST or standard time as needed.
+    # Note: This conversion is adjusted for macOS.
+    # Example: NZT during Daylight Saving Time (+13)
+    nzt_time=$(date -j -u -f "%Y-%m-%dT%H:%M:%SZ" "$utc_time" "+%a %-d %b, %I:%M %p NZT" -v+13H)
+
+    echo "$nzt_time, Tide Height: $value meters"
+done

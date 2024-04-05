@@ -1,7 +1,7 @@
 # INPUT OPTIONS ----------------------------------------
 
 # Include system inputrc to avoid weird behaviour
-$include /etc/inputrc
+#$include /etc/inputrc
 
 # Don't show control characters (^C) on screen
 set echo-control-characters off
@@ -27,8 +27,10 @@ set completion-ignore-case On
 # Set mode prompt
 #set vi-ins-mode-string ┗┓\e[0;35mINS\e[0m\e[2m┏\1\e[6 q\2
 #set vi-cmd-mode-string ┗┓\e[0;36mCMD\e[0m\e[2m┏\1\e[2 q\2
-set vi-ins-mode-string └─[\e[0;35mINS\e[0m]\1\e[6 q\2
-set vi-cmd-mode-string └─[\e[0;36mCMD\e[0m]\1\e[2 q\2
+#set vi-ins-mode-string └─[\e[0;35mINS\e[0m]\1\e[6 q\2
+#set vi-cmd-mode-string └─[\e[0;36mCMD\e[0m]\1\e[2 q\2
+set vi-ins-mode-string "(INS)"
+set vi-cmd-mode-string "(CMD)"
 
 # VI COMMAND MODE KEYMAPS ------------------------------
 set keymap vi-command

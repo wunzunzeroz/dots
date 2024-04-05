@@ -44,6 +44,7 @@ let g:WhichKey_SortOrder = "by_key_prefix_first˜"
 let g:WhichKeyDesc_leader = "<leader> Leader key"
 
 let g:WhichKeyDesc_leader = "<leader>x Open file explorer"
+let g:WhichKeyDesc_open = "<leader>o Open filE"
 
 let g:WhichKeyDesc_easymotion = "<leader>j Jump with Easymotion"
 let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
@@ -234,3 +235,6 @@ map <leader>tr <Action>(RiderUnitTestRunContextAction)
 " Flutter Specific
 map <leader>lfw <Action>(Flutter.ExtractWidget)
 map <leader>lfr <Action>(Flutter.Toolbar.ReloadAction)
+
+" IDE Actions
+map <leader>o <Action>(OpenFile)

@@ -106,6 +106,7 @@ gclone() {
 bindkey -v
 
 # Tmux
+alias tx='tmuxinator' # `brew install tmuxinator`
 alias tls='tmux ls'
 alias tns='tmux new -s $1'
 alias tas='tmux attach-session -t $1'

@@ -1,0 +1,29 @@
+name: XERO
+root: ~/dev
+
+windows:
+  - docker:
+      layout: main-vertical
+      panes:
+        - dps
+        - dst
+  - dotfiles:
+      root: ~/dotfiles
+      panes:
+        - lvim
+  - development:
+      root: ~/dev/code/tmt-development/
+      layout: main-vertical
+      panes:
+        - glow README.md
+        - ./pull
+  - partner-ui:
+      root: ~/dev/code/partner.ui/
+      layout: main-vertical
+      panes:
+        - cd ./src/spa
+        - cd ./src/bff
+  - billing-api:
+      root: ~/dev/code/Ecosystem.Billing.API
+      panes:
+        - make

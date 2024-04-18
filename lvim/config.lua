@@ -14,6 +14,7 @@ lvim.colorscheme = 'dracula'
 -- VIM MAPPINGS ----------
 
 vim.opt.foldmethod = 'indent'
+vim.opt.relativenumber = true
 
 -- Open which-key faster
 vim.opt.timeoutlen = 100

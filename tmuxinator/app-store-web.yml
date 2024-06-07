@@ -1,0 +1,27 @@
+name: app-store-web
+root: ~/dev/xero
+
+windows:
+  - app_store_web:
+      layout: even-horizontal
+      root: ~/dev/xero/ecosystem-app-store-web
+      panes:
+        - frontend:
+            - npm ci
+            - npm run watch
+        - server:
+            - dotnet run --project Server/Marketplace.Web
+  - app_store_dev:
+      layout: main-vertical
+      root: ~/dev/xero/ecosystem-app-store-development
+      panes:
+        - development:
+            - npm ci
+            - aws sso login --profile Developer-xero-api-uat
+            - aws ecr get-login-password --region us-west-2 --profile Developer-xero-api-uat | docker login --username AWS --password-stdin
+              523751728613.dkr.ecr.us-west-2.amazonaws.com
+            - docker compose up
+        - seed:
+            - echo "Run 'npm run seed' once containers are up and stable"
+  - docker: dps
+  - htop: htop

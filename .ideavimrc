@@ -29,7 +29,6 @@ set surround
 set highlightedyank
 set sneak
 set nerdtree
-set quickscope
 
 " Easymotion settings
 set easymotion
@@ -80,8 +79,12 @@ let g:WhichKeyDesc_file_quickLook = "<leader><leader> Recent files"
 let g:WhichKeyDesc_file_nav = "<leader>f File navigation"
 let g:WhichKeyDesc_file_nav_goto_file = "<leader>ff Go to file"
 let g:WhichKeyDesc_file_nav_goto_class = "<leader>fc Go to class"
-let g:WhichKeyDesc_file_nav_goto_member = "<leader>fm Go to member in file"
+let g:WhichKeyDesc_file_nav_goto_member = "<leader>fs Go to member in file"
 let g:WhichKeyDesc_file_nav_goto_text = "<leader>ft Search for text"
+let g:WhichKeyDesc_file_nav_goto_files = "<leader>fp Find in files"
+let g:WhichKeyDesc_file_nav_new_scratch = "<leader>fn New scratch file"
+let g:WhichKeyDesc_file_nav_next_occurence = "<leader>fo Next occurence"
+let g:WhichKeyDesc_file_nav_prev_occurence = "<leader>fO Prev occurence"
 let g:WhichKeyDesc_file_nav_show_recent_files = "<leader>fr Show recent files"
 let g:WhichKeyDesc_file_nav_show_recent_locations = "<leader>fl Show recent locations"
 
@@ -145,7 +148,7 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Execute macro saved in 'q' register
-nnoremap qj @q
+nnoremap Q @q
 
 " Popup navigation
 inoremap <C-j> <Action>(PopupMenu-selectNext)
@@ -198,12 +201,16 @@ map <leader>as <action>(SearchEverywhere)
 " File navigation
 map <leader>ff <action>(GotoFile)
 map <leader>fr <action>(RecentFiles)
-map <leader>fm <action>(FileStructurePopup)
+map <leader>fs <action>(FileStructurePopup)
 map <leader>fc <action>(GotoClass)
-map <leader>ft <action>(FindInPath)
+map <leader>ft <action>(TextSearchAction)
+map <leader>fp <action>(FindInPath)
 map <leader><leader> <Action>(RecentFiles)
 map <leader>fl <action>(RecentLocations)
-map <leader>fs <action>(NewScratchFile)
+map <leader>fn <action>(NewScratchFile)
+map <leader>fo <action>(NextOccurence)
+map <leader>fO <action>(PreviousOccurence)
+
 
 " Close active tab
 map <leader>q <action>(CloseContent)

@@ -14,6 +14,7 @@ export EDITOR=nvim
 export HISTSIZE=1000000
 export HISTFILESIZE=100000000
 export HISTTIMEFORMAT="[%h %d %H:%M:%S] "
+alias history='history 1' # zsh is weird with history
 #export HISTCONTROL=ignoreboth:erasedups
 #export HISTIGNORE="ls:ll:cd*:gs:gd:gdf:gc:gco:gcb:git*:c:r:history"
 
@@ -30,6 +31,7 @@ alias n='nvim'
 alias h='history'
 alias c='clear'
 alias r='reset'
+alias s='function _s() { pattern="$1"; lvim -p $(ag -l "$pattern") -c "argdo /$pattern"; }; _s'
 alias x='exit'
 alias la='ls -a'
 alias ll='ls -FGalh --color=auto'
@@ -39,9 +41,9 @@ alias dfh='df -h'
 alias cp='cp -v'
 alias rm='rm -i'
 alias cgrep='grep -Hn --color=always'
-alias cat='ccat' // Needs 'brew install ccat'
+alias cat='ccat' #// Needs 'brew install ccat'
 
-alias csi='dotnet repl' // Install with 'dotnet tool install -g dotnet-repl'
+alias csi='dotnet repl' #// Install with 'dotnet tool install -g dotnet-repl'
 
 # Work
 alias lead='cd ~/dev/code/PartnerExperience/LeadService'
@@ -118,8 +120,11 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-  export PATH=/Users/matthew.chapman/.local/bin:/Users/matthew.chapman/dev/bin:/Users/matthew.chapman/.nvm/versions/node/v20.11.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/usr/local/share/dotnet:~/.dotnet/tools
+  export PATH=$PATH:/Users/matthew.chapman/.pyenv/versions/3.12.3/bin:/Users/matthew.chapman/.local/bin:/Users/matthew.chapman/dev/bin:/Users/matthew.chapman/.nvm/versions/node/v20.11.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/usr/local/share/dotnet:~/.dotnet/tools
+
 
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+source /Users/matthew.chapman/dev/xero/ecosystem-billing-dev/terminal-configs/variables.sh

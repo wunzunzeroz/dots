@@ -56,6 +56,7 @@ let g:WhichKeyDesc_bookmark = "<leader>b Toggle bookmark"
 let g:WhichKeyDesc_context = "<leader>c Contexts"
 let g:WhichKeyDesc_context_load = "<leader>cl Load Context"
 let g:WhichKeyDesc_context_save = "<leader>cs Save Context"
+let g:WhichKeyDesc_context_clear = "<leader>cc Clear Context"
 
 let g:WhichKeyDesc_fold = "<leader>z Folding"
 let g:WhichKeyDesc_fold_all = "<leader>zc Fold all regions"
@@ -179,6 +180,7 @@ map <leader>x :NERDTreeToggle<CR>
 " Contexts
 map <leader>cs <Action>(context.save)
 map <leader>cl <Action>(context.load)
+map <leader>cc <Action>(context.clear)
 
 " Folding
 map <leader>zc :action CollapseAllRegions<CR>

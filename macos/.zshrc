@@ -28,6 +28,7 @@ alias sz='source ~/.zshrc'
 alias vimrc='lvim ~/.vimrc'
 
 alias n='nvim'
+alias v='lvim'
 alias h='history'
 alias c='clear'
 alias r='reset'
@@ -43,14 +44,11 @@ alias rm='rm -i'
 alias cgrep='grep -Hn --color=always'
 alias cat='ccat' #// Needs 'brew install ccat'
 
-alias csi='dotnet repl' #// Install with 'dotnet tool install -g dotnet-repl'
+# REPLs
+alias repl-cs='dotnet repl' # Install with 'dotnet tool install -g dotnet-repl'
+alias repl-ts='node-prototype-repl' # Install with 'npm install -g nodejs/repl'
+alias repl-js='node-prototype-repl' # Install with 'npm install -g nodejs/repl'
 
-# Work
-alias lead='cd ~/dev/code/PartnerExperience/LeadService'
-alias bill='cd ~/dev/code/Ecosystem.Billing.API'
-alias anal='cd ~/dev/code/analytics-pipeline'
-
-alias rangr='cd ~/dev/personal/RANGR'
 
 listport() {
         lsof -i :$1
@@ -85,11 +83,13 @@ alias gd='git diff'
 alias gdc='git diff --compact-summary'
 alias gc='git commit -m'
 alias gl="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an%Cgreen%d %Creset%s' --date=short"
+alias grl="git reflog --date=local"
 alias gco='git checkout $1'
 alias gcb='git checkout -b $1'
 alias gpu='git push'
 alias gpd='git pull'
 alias grm='git restore --staged'
+alias gsps='git stash && git pull && git stash apply'
 
 function pretty_diff() {
    # Check if diff-so-fancy installed
@@ -123,8 +123,23 @@ export NVM_DIR="$HOME/.nvm"
   export PATH=$PATH:/Users/matthew.chapman/.pyenv/versions/3.12.3/bin:/Users/matthew.chapman/.local/bin:/Users/matthew.chapman/dev/bin:/Users/matthew.chapman/.nvm/versions/node/v20.11.0/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/usr/local/share/dotnet:~/.dotnet/tools
 
 
+export PATH=/Users/mattchapman/.local/bin:$PATH
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
-source /Users/matthew.chapman/dev/xero/ecosystem-billing-dev/terminal-configs/variables.sh
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/mattchapman/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/mattchapman/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/mattchapman/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/mattchapman/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Add Doom emacs 'Doom' command to path
+export PATH="$HOME/.emacs.d/bin:$PATH"
+
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
+

@@ -1,0 +1,46 @@
+
+[user]
+    name = Matt Chapman
+    email = matt@sea-flux.com
+
+[core]
+    editor = vim
+    autocrlf = input  ; For Mac/Linux. Use 'true' on Windows
+
+[color]
+    ui = auto
+
+[alias]
+    s = status
+    c = commit
+    d = diff
+    co = checkout
+    cb = checkout -b
+    br = branch
+    lg = log --oneline --graph --decorate --all
+    amend = commit --amend --no-edit
+
+[pull]
+    ff = only  ; Prefer fast-forward merges only; prevents accidental merge commits
+    rebase = true
+
+[push]
+    default = current  ; pushes current branch only
+    autoSetupRemote = true  ; auto set upstream on first push (key setting)
+
+[fetch]
+    prune = true  ; clean up stale branches on fetch
+    pruneTags = true  ; remove tags that don't exist remotely
+
+[diff]
+    tool = vimdiff
+
+[merge]
+    tool = vimdiff
+    conflictstyle = diff3
+
+[rerere]
+    enabled = true  ; reuse recorded conflict resolutions
+
+[init]
+    defaultBranch = main

@@ -32,11 +32,14 @@ set nerdtree
 
 " Easymotion settings
 set easymotion
-set notimeout
 
 " Which-key settings
 set which-key
+set notimeout
+set timeoutlen=0
+
 let g:WhichKey_FontSize = 16
+let g:WhichKey_DefaultDelay = 0
 let g:WhichKey_CommandColor = "#41ead4"
 let g:WhichKey_PrefixColor = "#f335b2"
 let g:WhichKey_SortOrder = "by_key_prefix_first˜"
@@ -44,12 +47,13 @@ let g:WhichKey_SortOrder = "by_key_prefix_first˜"
 let g:WhichKeyDesc_leader = "<leader> Leader key"
 
 let g:WhichKeyDesc_leader = "<leader>x Open file explorer"
-let g:WhichKeyDesc_open = "<leader>o Open filE"
+let g:WhichKeyDesc_open = "<leader>o Open file"
+let g:WhichKeyDesc_new = "<leader>n New file"
 
 let g:WhichKeyDesc_easymotion = "<leader>j Jump with Easymotion"
 let g:WhichKeyDesc_easymotion_prefix = "<leader><leader>"
 
-let g:WhichKeyDesc_comment = "<leader>/ Comment line"
+let g:WhichKeyDesc_comment = "<leader>; Comment line"
 let g:WhichKeyDesc_prettify = "<leader>p Prettify code (using Prettier)"
 let g:WhichKeyDesc_bookmark = "<leader>b Toggle bookmark"
 
@@ -102,6 +106,7 @@ let g:WhichKeyDesc_refactoring_variable = "<leader>rv Introduce variable"
 let g:WhichKeyDesc_refactoring_field = "<leader>rf Introduce field"
 let g:WhichKeyDesc_refactoring_signature = "<leader>rs Change signature"
 let g:WhichKeyDesc_refactoring_all = "<leader>rr Open refactorings list"
+let g:WhichKeyDesc_refactoring_imports = "<leader>ro Optimize imports"
 
 let g:WhichKeyDesc_goto = "<leader>g Go to X"
 let g:WhichKeyDesc_goto_declaration = "<leader>gd Go to Definition"
@@ -164,7 +169,7 @@ inoremap <C-k> <Action>(PopupMenu-selectPrev)
 "" ========================================================
 
 " Comment lines
-map <leader>/<action>(CommentByLineComment)
+map <leader>;<action>(CommentByLineComment)
 
 " Prettify code
 map <leader>p <action>(ReformatWithPrettierAction)
@@ -232,6 +237,7 @@ map <leader>rv <Action>(IntroduceVariable)
 map <leader>rf <Action>(IntroduceField)
 map <leader>rs <Action>(ChangeSignature)
 map <leader>rr <Action>(Refactorings.QuickListPopupAction)
+map <leader>ro <Action>(OptimizeImports)
 
 " Go to code
 nmap <leader>gd <Action>(GotoDeclaration)
@@ -260,3 +266,4 @@ map <leader>lfr <Action>(Flutter.Toolbar.ReloadAction)
 
 " IDE Actions
 map <leader>o <Action>(OpenFile)
+map <leader>n <Action>(NewFile)

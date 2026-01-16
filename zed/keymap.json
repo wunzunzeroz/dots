@@ -1,0 +1,87 @@
+//Timestamp Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // Window and Pane navigation
+      "alt-h": "workspace::ActivatePaneLeft",
+      "alt-l": "workspace::ActivatePaneRight",
+      "alt-k": "workspace::ActivatePaneUp",
+      "alt-j": "workspace::ActivatePaneDown",
+      "alt-n": "pane::ActivateNextItem",
+      "alt-p": "pane::ActivatePreviousItem",
+      "alt-q": "pane::CloseActiveItem",
+      // Manage splits
+      "space w v": "pane::SplitRight",
+      "space w s": "pane::SplitDown",
+      // File navigation
+      "space space": "tab_switcher::Toggle", // Go to file
+      "space f f": "file_finder::Toggle", // Go to file
+      "space f t": "workspace::NewSearch", // Go to text
+      "space f s": "project_symbols::Toggle", // Go to symbol
+      "space f n": "workspace::NewFile", // New untitled file
+      // Toggle docks
+      "; ; l": "workspace::ToggleLeftDock",
+      "; ; r": "workspace::ToggleRightDock",
+      "; ; b": "workspace::ToggleBottomDock",
+      // Toggle panels
+      "; ; e": "editor::ToggleFocus", // Editor
+      "; ; f": "project_panel::ToggleFocus", // Files
+      "; ; g": "git_panel::ToggleFocus", // Git
+      "; ; a": "agent::ToggleFocus", // AI Agent
+      "; ; s": "outline_panel::ToggleFocus", // Structure
+    },
+  },
+  {
+    "context": "TabSwitcher",
+    "bindings": {
+      "q": "tab_switcher::CloseSelectedItem",
+      "j": "menu::SelectNext",
+      "k": "menu::SelectPrevious",
+    },
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      "; d": "project_panel::Delete",
+      "; x": "project_panel::Cut",
+      "; y": "project_panel::Copy",
+      "; p": "project_panel::Paste",
+      "; n d": "project_panel::NewDirectory",
+      "; n f": "project_panel::NewFile",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == normal",
+    "bindings": {
+      "space c": "editor::ToggleComments",
+      // Context Navigation
+      "space p": "editor::Format",
+      "space g d": "editor::GoToDefinition",
+      "space g t": "editor::GoToTypeDefinition",
+      "space g u": "editor::FindAllReferences",
+      // Folding
+      "space z c": "editor::FoldAll",
+      "space z o": "editor::UnfoldAll",
+      "space z 1": "editor::FoldAtLevel_1",
+      "space z 2": "editor::FoldAtLevel_2",
+      "space z 3": "editor::FoldAtLevel_3",
+      // Refactoring
+      "space r n": "editor::Rename",
+      "space r r": "editor::ToggleCodeActions",
+      "space r o": "editor::OrganizeImports",
+    },
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j k": "vim::NormalBefore",
+    },
+  },
+]

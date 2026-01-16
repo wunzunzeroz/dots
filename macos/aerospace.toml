@@ -1,0 +1,146 @@
+
+############################################
+# Aerospace – Matt’s Desk Configuration
+# 3 monitors:
+# - LG external (main)
+# - MacBook built-in (secondary)
+# - Portable monitor (unassigned / flexible)
+#
+# Philosophy:
+# - 1 window per space
+# - Spaces are semantic, not numeric
+# - Deterministic app → workspace → display
+############################################
+
+
+############################################
+# General behaviour
+############################################
+
+start-at-login = true
+
+# Keep things predictable
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# We’re not really tiling, but these defaults keep things sane
+default-root-container-layout = "tiles"
+default-root-container-orientation = "horizontal"
+
+
+############################################
+# Workspace → Monitor assignment
+############################################
+# Names here should match how Aerospace reports displays.
+# If needed, run `aerospace list-monitors` to confirm.
+
+[workspace-to-monitor-force-assignment]
+
+# Main LG monitor – deep work
+"main:1:web"   = "LG ULTRAWIDE"
+"main:2:code"  = "LG ULTRAWIDE"
+"main:3:api"   = "LG ULTRAWIDE"
+
+# Built-in MacBook display – comms & ops
+"side:1:todo"  = "Built-in Retina Display"
+"side:2:slack" = "Built-in Retina Display"
+"side:3:web"   = "Built-in Retina Display"
+"side:4:term"  = "Built-in Retina Display"
+"side:5:music" = "Built-in Retina Display"
+
+# Portable monitor intentionally left unassigned
+# (used manually for transient / reference work)
+"port" = "ASUS MB16AH"
+
+
+############################################
+# App → Workspace rules
+############################################
+
+# Arc Browser (primary window)
+[[on-window-detected]]
+if.app-id = "company.thebrowser.Browser"
+run = ["move-node-to-workspace main:1:web"]
+
+# Zed editor
+[[on-window-detected]]
+if.app-id = "dev.zed.Zed"
+run = ["move-node-to-workspace main:2:code"]
+
+# Bruno (API client)
+[[on-window-detected]]
+if.app-id = "com.usebruno.app"
+run = ["move-node-to-workspace main:3:api"]
+
+# Firefoo (Firestore GUI)
+[[on-window-detected]]
+if.app-id = "com.electron.firefoo"
+run = ["move-node-to-workspace main:3:api"]
+
+# Todoist
+[[on-window-detected]]
+if.app-id = "com.todoist.mac.Todoist"
+run = ["move-node-to-workspace side:1:todo"]
+
+# Slack
+[[on-window-detected]]
+if.app-id = "com.tinyspeck.slackmacgap"
+run = ["move-node-to-workspace side:2:slack"]
+
+# Chrome
+[[on-window-detected]]
+if.app-id = "com.google.Chrome"
+run = ["move-node-to-workspace side:3:web"]
+
+# Terminal
+[[on-window-detected]]
+if.app-id = "org.alacritty"
+run = ["move-node-to-workspace side:4:term"]
+
+# Spotify
+[[on-window-detected]]
+if.app-id = "com.spotify.client"
+run = ["move-node-to-workspace side:5:music"]
+
+
+############################################
+# Key bindings – workspace navigation
+############################################
+# Intentional groupings:
+# - Numbers = main monitor
+# - Letters = secondary monitor
+
+[mode.main.binding]
+
+# Main (LG)
+# "alt-1" = "workspace main:web"
+# "alt-2" = "workspace main:code"
+# "alt-3" = "workspace main:api"
+cmd-ctrl-p = "workspace --wrap-around prev"
+cmd-ctrl-n = "workspace --wrap-around next"
+
+# Toggle focus between monitors
+cmd-ctrl-m = "focus-monitor --wrap-around next"
+
+# Secondary (built-in)
+# "alt-q" = "workspace side:todo"
+# "alt-w" = "workspace side:slack"
+# "alt-e" = "workspace side:web"
+# "alt-r" = "workspace side:term"
+# "alt-t" = "workspace side:music"
+
+
+############################################
+# Optional helpers (commented out for now)
+############################################
+
+# Move focused window to another workspace
+# "alt-shift-1" = "move-node-to-workspace main:web"
+# "alt-shift-2" = "move-node-to-workspace main:code"
+# "alt-shift-3" = "move-node-to-workspace main:api"
+
+# "alt-shift-q" = "move-node-to-workspace side:todo"
+# "alt-shift-w" = "move-node-to-workspace side:slack"
+# "alt-shift-e" = "move-node-to-workspace side:web"
+# "alt-shift-r" = "move-node-to-workspace side:term"
+# "alt-shift-t" = "move-node-to-workspace side:music"

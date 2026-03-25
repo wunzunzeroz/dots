@@ -39,7 +39,7 @@ default-root-container-orientation = "horizontal"
 # Main LG monitor – deep work
 "main:1:web"   = "LG ULTRAWIDE"
 "main:2:code"  = "LG ULTRAWIDE"
-"main:3:api"   = "LG ULTRAWIDE"
+"main:3:tools"   = "LG ULTRAWIDE"
 
 # Built-in MacBook display – comms & ops
 "side:1:todo"  = "Built-in Retina Display"
@@ -47,10 +47,11 @@ default-root-container-orientation = "horizontal"
 "side:3:web"   = "Built-in Retina Display"
 "side:4:term"  = "Built-in Retina Display"
 "side:5:music" = "Built-in Retina Display"
+"side:6:msg" = "Built-in Retina Display"
 
 # Portable monitor intentionally left unassigned
 # (used manually for transient / reference work)
-"port" = "ASUS MB16AH"
+# "port" = "ASUS MB16AH"
 
 
 ############################################
@@ -101,6 +102,11 @@ run = ["move-node-to-workspace side:4:term"]
 [[on-window-detected]]
 if.app-id = "com.spotify.client"
 run = ["move-node-to-workspace side:5:music"]
+
+# Whatsapp
+[[on-window-detected]]
+if.app-id = "net.whatsapp.WhatsApp"
+run = ["move-node-to-workspace side:6:msg"]
 
 
 ############################################

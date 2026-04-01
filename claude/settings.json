@@ -50,7 +50,8 @@
       "Bash(echo:*)",
       "Bash(date:*)",
       "Bash(du:*)",
-      "Bash(env:*)"
+      "Bash(env:*)",
+      "Bash(tmux rename-window *)"
     ],
     "deny": [
       "Bash(sudo *)",
@@ -82,6 +83,10 @@
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash -c 'plugin_dir=$(ls -d \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | awk -F/ '\"'\"'{ print $(NF-1) \"\\t\" $(0) }'\"'\"' | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n | tail -1 | cut -f2-); exec \"/Users/mattchapman/.nvm/versions/node/v22.15.0/bin/node\" \"${plugin_dir}dist/index.js\"'"
   },
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
@@ -120,10 +125,6 @@
       "Explore": "claude-haiku-4-5-20251001"
     }
   },
-  "statusLine": {
-    "type": "command",
-    "command": "bash -c 'plugin_dir=$(ls -d \"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/plugins/cache/claude-hud/claude-hud/*/ 2>/dev/null | awk -F/ '\"'\"'{ print $(NF-1) \"\\t\" $(0) }'\"'\"' | sort -t. -k1,1n -k2,2n -k3,3n -k4,4n | tail -1 | cut -f2-); exec \"/Users/mattchapman/.nvm/versions/node/v22.15.0/bin/node\" \"${plugin_dir}dist/index.js\"'"
-  },
   "fileSuggestions": {
     "enabled": true,
     "excludePatterns": [
@@ -138,5 +139,6 @@
       "ios/Pods/**",
       "android/.gradle/**"
     ]
-  }
+  },
+  "voiceEnabled": true
 }

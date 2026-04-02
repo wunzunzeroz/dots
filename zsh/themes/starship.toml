@@ -22,19 +22,19 @@ error_symbol = "[❯](bold #f7768e)"
 vimcmd_symbol = "[❮](bold #7aa2f7)"
 
 [directory]
-format = "[ $path]($style)[](fg:#7aa2f7 bg:#9ece6a)"
+format = "[  $path ]($style)[](fg:#7aa2f7 bg:#9ece6a)"
 style = "bold fg:#1a1b26 bg:#7aa2f7"
 truncation_length = 3
 truncate_to_repo = true
 
 [git_branch]
-format = "[  $branch]($style)[](fg:#9ece6a bg:#1a1b26)"
+format = "[  $branch]($style)"
 style = "fg:#1a1b26 bg:#9ece6a"
 
 [git_status]
-format = "([ $all_status$ahead_behind]($style)[](fg:#e0af68 bg:#1a1b26))"
-style = "fg:#1a1b26 bg:#e0af68"
-conflicted = "=#414868"
+format = "([ $all_status$ahead_behind]($style))[](fg:#9ece6a bg:#1a1b26)"
+style = "fg:#1a1b26 bg:#9ece6a"
+conflicted = "="
 ahead = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕${count}"

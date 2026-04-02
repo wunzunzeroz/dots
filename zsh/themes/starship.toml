@@ -23,13 +23,13 @@ error_symbol = "[❯](bold #f7768e)"
 vimcmd_symbol = "[❮](bold #7aa2f7)"
 
 [directory]
-format = "[  $path ]($style)[](fg:#7aa2f7 bg:#9ece6a)"
+format = "[  $path ]($style)[](fg:#7aa2f7 bg:#1a1b26)"
 style = "bold fg:#1a1b26 bg:#7aa2f7"
 truncation_length = 3
 truncate_to_repo = true
 
 [git_branch]
-format = "[  $branch ]($style)[](fg:#9ece6a bg:#1a1b26)"
+format = "[](fg:#1a1b26 bg:#9ece6a)[  $branch ]($style)[](fg:#9ece6a bg:#1a1b26)"
 style = "fg:#1a1b26 bg:#9ece6a"
 
 [git_status]
@@ -51,7 +51,7 @@ style = "#e0af68"
 number_threshold = 1
 
 [nodejs]
-format = "[ $version]($style) "
+format = "[ $version]($style) "
 style = "#9ece6a"
 detect_files = ["package.json", ".node-version"]
 

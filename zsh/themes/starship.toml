@@ -5,11 +5,12 @@ format = """
 $directory\
 $git_branch\
 $git_status\
-$nodejs\
+$fill\
+$jobs\
+$docker_context\
 $python\
 $ruby\
-$docker_context\
-$fill\
+$nodejs\
 $cmd_duration\
 $line_break\
 $character"""
@@ -44,22 +45,27 @@ modified = "[!${count}](#e0af68)  "
 staged = "[+${count}](#9ece6a)  "
 deleted = "[✘${count}](#f7768e)  "
 
+[jobs]
+format = "[ $number]($style) "
+style = "#e0af68"
+number_threshold = 1
+
 [nodejs]
-format = "[  ($version)]($style)[](fg:#9ece6a bg:#1a1b26)"
-style = "fg:#1a1b26 bg:#9ece6a"
+format = "[ $version]($style) "
+style = "#9ece6a"
 detect_files = ["package.json", ".node-version"]
 
 [python]
-format = "[  ($version)]($style)[](fg:#e0af68 bg:#1a1b26)"
-style = "fg:#1a1b26 bg:#e0af68"
+format = "[ $version]($style) "
+style = "#e0af68"
 
 [ruby]
-format = "[  ($version)]($style)[](fg:#f7768e bg:#1a1b26)"
-style = "fg:#1a1b26 bg:#f7768e"
+format = "[ $version]($style) "
+style = "#f7768e"
 
 [docker_context]
-format = "[  $context]($style)[](fg:#7dcfff bg:#1a1b26)"
-style = "fg:#1a1b26 bg:#7dcfff"
+format = "[ $context]($style) "
+style = "#7dcfff"
 
 [cmd_duration]
 min_time = 2_000

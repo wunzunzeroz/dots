@@ -1,0 +1,75 @@
+# Starship prompt -- Tokyo Night Storm theme
+# Matches tmux Tokyo Night palette from ~/dots/tmux/conf/theme.conf
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$ruby\
+$docker_context\
+$fill\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Don't add a blank line between prompts
+add_newline = false
+
+[character]
+success_symbol = "[❯](bold #9ece6a)"
+error_symbol = "[❯](bold #f7768e)"
+vimcmd_symbol = "[❮](bold #7aa2f7)"
+
+[directory]
+style = "bold #7aa2f7"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "#9ece6a"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style)"
+style = "#e0af68"
+conflicted = "[=$count](bold #f7768e) "
+ahead = "[⇡$count](#9ece6a) "
+behind = "[⇣$count](#e0af68) "
+diverged = "[⇕$count](#f7768e) "
+untracked = "[?$count](#7dcfff) "
+stashed = "[*$count](#bb9af7) "
+modified = "[!$count](#e0af68) "
+staged = "[+$count](#9ece6a) "
+deleted = "[✘$count](#f7768e) "
+
+[nodejs]
+format = "[$symbol($version)]($style) "
+symbol = " "
+style = "#9ece6a"
+detect_files = ["package.json", ".node-version"]
+
+[python]
+format = "[$symbol($version)]($style) "
+symbol = " "
+style = "#e0af68"
+
+[ruby]
+format = "[$symbol($version)]($style) "
+symbol = " "
+style = "#f7768e"
+
+[docker_context]
+format = "[$symbol$context]($style) "
+symbol = " "
+style = "#7dcfff"
+
+[cmd_duration]
+min_time = 2_000
+format = "[$duration]($style) "
+style = "#414868"
+
+[fill]
+symbol = " "

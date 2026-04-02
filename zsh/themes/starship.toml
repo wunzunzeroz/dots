@@ -1,5 +1,5 @@
-# Starship prompt -- Tokyo Night Storm theme
-# Matches tmux Tokyo Night palette from ~/dots/tmux/conf/theme.conf
+# Starship prompt -- Tokyo Night Storm theme (powerline style)
+# Colored background segments with powerline arrow separators.
 
 format = """
 $directory\
@@ -14,7 +14,6 @@ $cmd_duration\
 $line_break\
 $character"""
 
-# Don't add a blank line between prompts
 add_newline = false
 
 [character]
@@ -23,48 +22,44 @@ error_symbol = "[❯](bold #f7768e)"
 vimcmd_symbol = "[❮](bold #7aa2f7)"
 
 [directory]
-style = "bold #7aa2f7"
+format = "[ $path]($style)[](fg:#7aa2f7 bg:#9ece6a)"
+style = "bold fg:#1a1b26 bg:#7aa2f7"
 truncation_length = 3
 truncate_to_repo = true
 
 [git_branch]
-format = "[$symbol$branch]($style) "
-symbol = " "
-style = "#9ece6a"
+format = "[  $branch]($style)[](fg:#9ece6a bg:#1a1b26)"
+style = "fg:#1a1b26 bg:#9ece6a"
 
 [git_status]
-format = "[$all_status$ahead_behind]($style)"
-style = "#e0af68"
-conflicted = "[=$count](bold #f7768e) "
-ahead = "[⇡$count](#9ece6a) "
-behind = "[⇣$count](#e0af68) "
-diverged = "[⇕$count](#f7768e) "
-untracked = "[?$count](#7dcfff) "
-stashed = "[*$count](#bb9af7) "
-modified = "[!$count](#e0af68) "
-staged = "[+$count](#9ece6a) "
-deleted = "[✘$count](#f7768e) "
+format = "([ $all_status$ahead_behind]($style)[](fg:#e0af68 bg:#1a1b26))"
+style = "fg:#1a1b26 bg:#e0af68"
+conflicted = "=#414868"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕${count}"
+untracked = "?${count}"
+stashed = "*${count}"
+modified = "!${count}"
+staged = "+${count}"
+deleted = "✘${count}"
 
 [nodejs]
-format = "[$symbol($version)]($style) "
-symbol = " "
-style = "#9ece6a"
+format = "[  ($version)]($style)[](fg:#9ece6a bg:#1a1b26)"
+style = "fg:#1a1b26 bg:#9ece6a"
 detect_files = ["package.json", ".node-version"]
 
 [python]
-format = "[$symbol($version)]($style) "
-symbol = " "
-style = "#e0af68"
+format = "[  ($version)]($style)[](fg:#e0af68 bg:#1a1b26)"
+style = "fg:#1a1b26 bg:#e0af68"
 
 [ruby]
-format = "[$symbol($version)]($style) "
-symbol = " "
-style = "#f7768e"
+format = "[  ($version)]($style)[](fg:#f7768e bg:#1a1b26)"
+style = "fg:#1a1b26 bg:#f7768e"
 
 [docker_context]
-format = "[$symbol$context]($style) "
-symbol = " "
-style = "#7dcfff"
+format = "[  $context]($style)[](fg:#7dcfff bg:#1a1b26)"
+style = "fg:#1a1b26 bg:#7dcfff"
 
 [cmd_duration]
 min_time = 2_000

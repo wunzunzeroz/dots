@@ -4,12 +4,12 @@
 format = """
 $directory\
 $git_branch\
-$git_status\
 $nodejs\
 $python\
 $ruby\
 $docker_context\
 $fill\
+$git_status\
 $cmd_duration\
 $line_break\
 $character"""
@@ -28,13 +28,13 @@ truncation_length = 3
 truncate_to_repo = true
 
 [git_branch]
-format = "[  $branch]($style)"
+format = "[  $branch ]($style)[](fg:#9ece6a bg:#1a1b26)"
 style = "fg:#1a1b26 bg:#9ece6a"
 
 [git_status]
-format = "([ $all_status$ahead_behind]($style))[](fg:#9ece6a bg:#1a1b26)"
-style = "fg:#1a1b26 bg:#9ece6a"
-conflicted = "="
+format = "([](fg:#e0af68 bg:#1a1b26)[ $all_status$ahead_behind]($style)[](fg:#e0af68 bg:#1a1b26))"
+style = "fg:#1a1b26 bg:#e0af68"
+conflicted = "[=](bold #f7768e)"
 ahead = "⇡${count}"
 behind = "⇣${count}"
 diverged = "⇕${count}"

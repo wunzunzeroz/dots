@@ -115,6 +115,7 @@
   },
   "alwaysThinkingEnabled": true,
   "fastMode": false,
+  "voiceEnabled": true,
   "autoMemoryEnabled": true,
   "effort": "high",
   "feedbackSurveyState": {
@@ -139,6 +140,5 @@
       "ios/Pods/**",
       "android/.gradle/**"
     ]
-  },
-  "voiceEnabled": true
+  }
 }

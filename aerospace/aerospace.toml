@@ -156,3 +156,32 @@ cmd-ctrl-r = "mode resize"
 
 # ── Dock toggle ─────────────────────────────
 cmd-ctrl-d = "exec-and-forget bash ~/.config/aerospace/dock-toggle.sh"
+
+
+############################################
+# Key bindings – resize mode
+############################################
+# Enter: cmd-ctrl-r
+# Exit:  escape or enter
+# hjkl to nudge, e to equalise, 1/2 for presets
+
+[mode.resize.binding]
+
+# Nudge (incremental)
+h = "resize width -50"
+l = "resize width +50"
+j = "resize height +50"
+k = "resize height -50"
+
+# Equal split (50/50)
+e = ["balance-sizes", "mode main"]
+
+# Preset: focused window ~70%
+1 = ["balance-sizes", "resize width +200", "mode main"]
+
+# Preset: focused window ~30%
+2 = ["balance-sizes", "resize width -200", "mode main"]
+
+# Exit resize mode
+escape = "mode main"
+enter = "mode main"

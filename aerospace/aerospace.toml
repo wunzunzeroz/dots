@@ -102,3 +102,57 @@ run = ["move-node-to-workspace side:5:music"]
 [[on-window-detected]]
 if.app-id = "net.whatsapp.WhatsApp"
 run = ["move-node-to-workspace side:6:msg"]
+
+
+############################################
+# Key bindings – main mode
+############################################
+
+[mode.main.binding]
+
+# ── Workspace jumping (direct) ──────────────
+# 1-3 = main monitor (deep work)
+# 4-9 = side monitor (comms/support)
+cmd-ctrl-1 = "workspace main:1:dev"
+cmd-ctrl-2 = "workspace main:2:code"
+cmd-ctrl-3 = "workspace main:3:data"
+cmd-ctrl-4 = "workspace side:1:todo"
+cmd-ctrl-5 = "workspace side:2:notes"
+cmd-ctrl-6 = "workspace side:3:slack"
+cmd-ctrl-7 = "workspace side:4:web"
+cmd-ctrl-8 = "workspace side:5:music"
+cmd-ctrl-9 = "workspace side:6:msg"
+
+# ── Workspace cycling ───────────────────────
+cmd-ctrl-n = "workspace --wrap-around next"
+cmd-ctrl-p = "workspace --wrap-around prev"
+cmd-ctrl-tab = "workspace-back-and-forth"
+
+# ── Focus navigation (vim hjkl) ─────────────
+cmd-ctrl-h = "focus left"
+cmd-ctrl-j = "focus down"
+cmd-ctrl-k = "focus up"
+cmd-ctrl-l = "focus right"
+cmd-ctrl-m = "focus-monitor --wrap-around next"
+
+# ── Move window to workspace ────────────────
+cmd-ctrl-shift-1 = "move-node-to-workspace main:1:dev"
+cmd-ctrl-shift-2 = "move-node-to-workspace main:2:code"
+cmd-ctrl-shift-3 = "move-node-to-workspace main:3:data"
+cmd-ctrl-shift-4 = "move-node-to-workspace side:1:todo"
+cmd-ctrl-shift-5 = "move-node-to-workspace side:2:notes"
+cmd-ctrl-shift-6 = "move-node-to-workspace side:3:slack"
+cmd-ctrl-shift-7 = "move-node-to-workspace side:4:web"
+cmd-ctrl-shift-8 = "move-node-to-workspace side:5:music"
+cmd-ctrl-shift-9 = "move-node-to-workspace side:6:msg"
+
+# ── Layout toggles ─────────────────────────
+cmd-ctrl-slash = "layout tiles h_accordion"
+cmd-ctrl-f = "fullscreen"
+cmd-ctrl-t = "layout floating tiling"
+
+# ── Modes ───────────────────────────────────
+cmd-ctrl-r = "mode resize"
+
+# ── Dock toggle ─────────────────────────────
+cmd-ctrl-d = "exec-and-forget bash ~/.config/aerospace/dock-toggle.sh"

@@ -47,3 +47,58 @@ default-root-container-orientation = "horizontal"
 "side:4:web"   = "Built-in Retina Display"
 "side:5:music" = "Built-in Retina Display"
 "side:6:msg"   = "Built-in Retina Display"
+
+
+############################################
+# App → Workspace rules
+############################################
+
+# Arc Browser → dev workspace (paired with Ghostty)
+[[on-window-detected]]
+if.app-id = "company.thebrowser.Browser"
+run = ["move-node-to-workspace main:1:dev"]
+
+# Ghostty terminal → dev workspace (paired with Arc)
+[[on-window-detected]]
+if.app-id = "com.mitchellh.ghostty"
+run = ["move-node-to-workspace main:1:dev"]
+
+# Zed editor
+[[on-window-detected]]
+if.app-id = "dev.zed.Zed"
+run = ["move-node-to-workspace main:2:code"]
+
+# Firefoo (Firestore GUI)
+[[on-window-detected]]
+if.app-id = "com.electron.firefoo"
+run = ["move-node-to-workspace main:3:data"]
+
+# Todoist
+[[on-window-detected]]
+if.app-id = "com.todoist.mac.Todoist"
+run = ["move-node-to-workspace side:1:todo"]
+
+# Obsidian
+[[on-window-detected]]
+if.app-id = "md.obsidian"
+run = ["move-node-to-workspace side:2:notes"]
+
+# Slack
+[[on-window-detected]]
+if.app-id = "com.tinyspeck.slackmacgap"
+run = ["move-node-to-workspace side:3:slack"]
+
+# Chrome
+[[on-window-detected]]
+if.app-id = "com.google.Chrome"
+run = ["move-node-to-workspace side:4:web"]
+
+# Spotify
+[[on-window-detected]]
+if.app-id = "com.spotify.client"
+run = ["move-node-to-workspace side:5:music"]
+
+# WhatsApp
+[[on-window-detected]]
+if.app-id = "net.whatsapp.WhatsApp"
+run = ["move-node-to-workspace side:6:msg"]

@@ -26,6 +26,12 @@ enable-normalization-opposite-orientation-for-nested-containers = true
 default-root-container-layout = "tiles"
 default-root-container-orientation = "horizontal"
 
+# Focused window border via JankyBorders (Tokyo Night colours)
+# Install: brew tap FelixKratz/formulae && brew install borders
+after-startup-command = [
+    'exec-and-forget borders active_color=0xffbb9af7 inactive_color=0xff3b4261 width=10.0 ax_focus=on'
+]
+
 
 ############################################
 # Workspace → Monitor assignment
@@ -146,6 +152,12 @@ cmd-ctrl-shift-7 = "move-node-to-workspace side:4:web"
 cmd-ctrl-shift-8 = "move-node-to-workspace side:5:music"
 cmd-ctrl-shift-9 = "move-node-to-workspace side:6:msg"
 
+# ── Swap window position (vim hjkl) ─────────
+cmd-ctrl-shift-h = "move left"
+cmd-ctrl-shift-j = "move down"
+cmd-ctrl-shift-k = "move up"
+cmd-ctrl-shift-l = "move right"
+
 # ── Layout toggles ─────────────────────────
 cmd-ctrl-slash = "layout tiles h_accordion"
 cmd-ctrl-f = "fullscreen"
@@ -183,5 +195,5 @@ e = ["balance-sizes", "mode main"]
 2 = ["balance-sizes", "resize width -200", "mode main"]
 
 # Exit resize mode
-escape = "mode main"
+esc = "mode main"
 enter = "mode main"

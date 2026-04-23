@@ -57,7 +57,8 @@
       "Bash(sudo *)",
       "Bash(rm -rf *)",
       "Edit(.env*)"
-    ]
+    ],
+    "defaultMode": "auto"
   },
   "model": "opus[1m]",
   "hooks": {
@@ -111,12 +112,19 @@
         "source": "github",
         "repo": "jarrodwatts/claude-hud"
       }
+    },
+    "chrome-devtools-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "ChromeDevTools/chrome-devtools-mcp"
+      }
     }
   },
   "alwaysThinkingEnabled": true,
   "fastMode": false,
-  "voiceEnabled": true,
   "autoMemoryEnabled": true,
+  "skipAutoPermissionPrompt": true,
+  "voiceEnabled": true,
   "effort": "high",
   "feedbackSurveyState": {
     "lastShownTime": 1753939655408

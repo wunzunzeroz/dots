@@ -109,6 +109,23 @@ run = ["move-node-to-workspace side:5:music"]
 if.app-id = "net.whatsapp.WhatsApp"
 run = ["move-node-to-workspace side:6:msg"]
 
+# ── Always float ────────────────────────────
+
+# Affinity Designer 2
+[[on-window-detected]]
+if.app-id = "com.seriflabs.affinitydesigner2"
+run = ["layout floating"]
+
+# Finder
+[[on-window-detected]]
+if.app-id = "com.apple.finder"
+run = ["layout floating"]
+
+# Preview
+[[on-window-detected]]
+if.app-id = "com.apple.Preview"
+run = ["layout floating"]
+
 
 ############################################
 # Key bindings – main mode

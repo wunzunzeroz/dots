@@ -12,7 +12,7 @@
 set -euo pipefail
 
 text="$1"
-vault="$HOME/brain"
+vault="$HOME/atlas"
 file="$vault/inbox.md"
 ts="$(date +%Y-%m-%dT%H:%M)"
 

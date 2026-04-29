@@ -47,8 +47,8 @@ after-startup-command = [
 "main:3:data"  = ["LG ULTRAWIDE", "Built-in Retina Display"]
 
 # Side (MacBook) – comms & ops
-"side:1:todo"  = "Built-in Retina Display"
-"side:2:notes" = "Built-in Retina Display"
+"side:1:claude"  = "Built-in Retina Display"
+"side:2:atlas" = "Built-in Retina Display"
 "side:3:slack" = "Built-in Retina Display"
 "side:4:web"   = "Built-in Retina Display"
 "side:5:music" = "Built-in Retina Display"
@@ -79,15 +79,15 @@ run = ["move-node-to-workspace main:2:code"]
 if.app-id = "com.electron.firefoo"
 run = ["move-node-to-workspace main:3:data"]
 
-# Todoist
+# Claude Desktop
 [[on-window-detected]]
-if.app-id = "com.todoist.mac.Todoist"
-run = ["move-node-to-workspace side:1:todo"]
+if.app-id = "com.anthropic.claudefordesktop"
+run = ["move-node-to-workspace side:1:claude"]
 
 # Obsidian
 [[on-window-detected]]
 if.app-id = "md.obsidian"
-run = ["move-node-to-workspace side:2:notes"]
+run = ["move-node-to-workspace side:2:atlas"]
 
 # Slack
 [[on-window-detected]]
@@ -139,8 +139,8 @@ run = ["layout floating"]
 cmd-ctrl-1 = "workspace main:1:dev"
 cmd-ctrl-2 = "workspace main:2:code"
 cmd-ctrl-3 = "workspace main:3:data"
-cmd-ctrl-4 = "workspace side:1:todo"
-cmd-ctrl-5 = "workspace side:2:notes"
+cmd-ctrl-4 = "workspace side:1:claude"
+cmd-ctrl-5 = "workspace side:2:atlas"
 cmd-ctrl-6 = "workspace side:3:slack"
 cmd-ctrl-7 = "workspace side:4:web"
 cmd-ctrl-8 = "workspace side:5:music"
@@ -162,8 +162,8 @@ cmd-ctrl-m = "focus-monitor --wrap-around next"
 cmd-ctrl-shift-1 = "move-node-to-workspace main:1:dev"
 cmd-ctrl-shift-2 = "move-node-to-workspace main:2:code"
 cmd-ctrl-shift-3 = "move-node-to-workspace main:3:data"
-cmd-ctrl-shift-4 = "move-node-to-workspace side:1:todo"
-cmd-ctrl-shift-5 = "move-node-to-workspace side:2:notes"
+cmd-ctrl-shift-4 = "move-node-to-workspace side:1:claude"
+cmd-ctrl-shift-5 = "move-node-to-workspace side:2:atlas"
 cmd-ctrl-shift-6 = "move-node-to-workspace side:3:slack"
 cmd-ctrl-shift-7 = "move-node-to-workspace side:4:web"
 cmd-ctrl-shift-8 = "move-node-to-workspace side:5:music"

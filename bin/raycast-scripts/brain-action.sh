@@ -15,7 +15,7 @@
 set -euo pipefail
 
 text="$1"
-vault="$HOME/brain"
+vault="$HOME/atlas"
 today="$(date +%Y-%m-%d)"
 file="$vault/daily-notes/$today.md"
 template="$vault/_TEMPLATE/daily-note.md"

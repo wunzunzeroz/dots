@@ -10,6 +10,6 @@
 
 set -euo pipefail
 
-cd "$HOME/brain"
+cd "$HOME/atlas"
 # Invoke Claude Code CLI with the daily-brief skill
 claude --skill daily-brief 2>&1

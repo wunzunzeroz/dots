@@ -10,6 +10,21 @@ find_repo_root() {
   git rev-parse --show-toplevel 2>/dev/null || die "not a git repository"
 }
 
+detect_pm() {
+  local dir="$1"
+  if [ -f "$dir/yarn.lock" ]; then
+    echo yarn
+  elif [ -f "$dir/pnpm-lock.yaml" ]; then
+    echo pnpm
+  elif [ -f "$dir/bun.lockb" ]; then
+    echo bun
+  elif [ -f "$dir/package-lock.json" ]; then
+    echo npm
+  else
+    die "no lockfile in $dir; can't detect package manager"
+  fi
+}
+
 pick_worktree() {
   command -v fzf >/dev/null || die "fzf not found. brew install fzf"
   local picker_cmd

@@ -84,7 +84,20 @@ main() {
   local selected
   selected="$(list_worktrees | pick_worktree)"
   [ -n "$selected" ] || exit 0
-  echo "selected: $selected"
+
+  cd "$selected"
+
+  local pm port
+  pm="$(detect_pm "$selected")"
+  port="$(find_free_port 8081)"
+
+  printf 'boot: using %s at %s on port %s\n' "$pm" "$selected" "$port"
+
+  "$pm" install
+
+  export RCT_METRO_PORT="$port"
+  export EXPO_PACKAGER_PORT="$port"
+  exec "$pm" start --port "$port"
 }
 
 main "$@"

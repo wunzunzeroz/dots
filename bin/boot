@@ -10,6 +10,20 @@ find_repo_root() {
   git rev-parse --show-toplevel 2>/dev/null || die "not a git repository"
 }
 
+find_free_port() {
+  local start="${1:-8081}"
+  local max=$((start + 100))
+  local port="$start"
+  while [ "$port" -lt "$max" ]; do
+    if ! lsof -nP -iTCP:"$port" -sTCP:LISTEN >/dev/null 2>&1; then
+      echo "$port"
+      return 0
+    fi
+    port=$((port + 1))
+  done
+  die "no free port in $start-$((max - 1))"
+}
+
 detect_pm() {
   local dir="$1"
   if [ -f "$dir/yarn.lock" ]; then

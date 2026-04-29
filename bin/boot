@@ -10,6 +10,20 @@ find_repo_root() {
   git rev-parse --show-toplevel 2>/dev/null || die "not a git repository"
 }
 
+pick_worktree() {
+  command -v fzf >/dev/null || die "fzf not found. brew install fzf"
+  local picker_cmd
+  if [ -n "${TMUX:-}" ]; then
+    picker_cmd=(fzf-tmux -p 80%,60% --with-nth=2,1 --delimiter=$'\t')
+  else
+    picker_cmd=(fzf --with-nth=2,1 --delimiter=$'\t')
+  fi
+  local selected
+  selected="$("${picker_cmd[@]}" || true)"
+  [ -n "$selected" ] || return 0
+  printf '%s\n' "${selected%%$'\t'*}"
+}
+
 list_worktrees() {
   local path branch
   path=""
@@ -38,7 +52,10 @@ list_worktrees() {
 
 main() {
   find_repo_root >/dev/null
-  list_worktrees
+  local selected
+  selected="$(list_worktrees | pick_worktree)"
+  [ -n "$selected" ] || exit 0
+  echo "selected: $selected"
 }
 
 main "$@"

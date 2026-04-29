@@ -10,10 +10,35 @@ find_repo_root() {
   git rev-parse --show-toplevel 2>/dev/null || die "not a git repository"
 }
 
+list_worktrees() {
+  local path branch
+  path=""
+  branch=""
+  while IFS= read -r line; do
+    case "$line" in
+      "worktree "*)
+        if [ -n "$path" ]; then
+          printf '%s\t%s\n' "$path" "${branch:-(detached)}"
+        fi
+        path="${line#worktree }"
+        branch=""
+        ;;
+      "branch refs/heads/"*)
+        branch="${line#branch refs/heads/}"
+        ;;
+      "detached")
+        branch="(detached)"
+        ;;
+    esac
+  done < <(git worktree list --porcelain)
+  if [ -n "$path" ]; then
+    printf '%s\t%s\n' "$path" "${branch:-(detached)}"
+  fi
+}
+
 main() {
-  local root
-  root="$(find_repo_root)"
-  echo "$root"
+  find_repo_root >/dev/null
+  list_worktrees
 }
 
 main "$@"

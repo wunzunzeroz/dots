@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Symlink dotfiles into their canonical locations on macOS.
+# Idempotent: correct symlinks are kept, real files are moved aside as
+# <target>.bak.<timestamp> before being replaced.
+
+set -euo pipefail
+
+DOTS="$(cd "$(dirname "$0")" && pwd)"
+TS="$(date +%Y%m%d-%H%M%S)"
+
+# Format: "<target relative to $HOME> <source relative to $DOTS>"
+LINKS=(
+  ".zshrc                    zsh/.zshrc"
+  ".tmux.conf                tmux/tmux.conf"
+  ".aerospace.toml           aerospace/aerospace.toml"
+  ".gitconfig                .gitconfig"
+  ".ideavimrc                .ideavimrc"
+  ".config/starship.toml     zsh/themes/starship.toml"
+  ".config/ghostty/config    ghostty/config"
+  ".config/zed/keymap.json   zed/keymap.json"
+  ".config/zed/settings.json zed/settings.json"
+  ".local/bin/boot           bin/boot"
+  ".zsh/conf                 zsh/conf"
+  ".tmux/conf                tmux/conf"
+  ".tmux/scripts             tmux/scripts"
+  ".claude/agent-memory      claude/agent-memory"
+  ".claude/agents            claude/agents"
+)
+
+link() {
+  local target="$HOME/$1"
+  local source="$DOTS/$2"
+
+  if [[ ! -e "$source" ]]; then
+    echo "✗ missing source: $source"
+    return
+  fi
+
+  mkdir -p "$(dirname "$target")"
+
+  if [[ -L "$target" && "$(readlink "$target")" == "$source" ]]; then
+    echo "✓ $target"
+    return
+  fi
+
+  if [[ -L "$target" || -e "$target" ]]; then
+    mv "$target" "$target.bak.$TS"
+    echo "→ backed up $target → $target.bak.$TS"
+  fi
+
+  ln -s "$source" "$target"
+  echo "+ $target → $source"
+}
+
+for entry in "${LINKS[@]}"; do
+  read -r tgt src <<< "$entry"
+  link "$tgt" "$src"
+done

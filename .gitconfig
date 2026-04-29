@@ -10,6 +10,15 @@
 [color]
     ui = auto
 
+[column]
+    ui = auto  ; columnar output for branch/tag listings
+
+[branch]
+    sort = -committerdate  ; most-recently-touched first
+
+[tag]
+    sort = version:refname  ; semver-style sort instead of lexical
+
 [alias]
     s = status
     c = commit
@@ -19,6 +28,14 @@
     br = branch
     lg = log --oneline --graph --decorate --all
     amend = commit --amend --no-edit
+    last = log -1 HEAD
+    staged = diff --staged
+    unstage = reset HEAD --
+    pushf = push --force-with-lease  ; refuses if remote moved since last fetch
+    aliases = !git config --get-regexp ^alias\\.
+
+[commit]
+    verbose = true  ; show diff in commit message editor
 
 [pull]
     ff = only  ; Prefer fast-forward merges only; prevents accidental merge commits
@@ -27,20 +44,30 @@
 [push]
     default = current  ; pushes current branch only
     autoSetupRemote = true  ; auto set upstream on first push (key setting)
+    followTags = true  ; push annotated tags alongside branches
 
 [fetch]
     prune = true  ; clean up stale branches on fetch
     pruneTags = true  ; remove tags that don't exist remotely
 
+[rebase]
+    autoStash = true  ; stash dirty tree before rebase, reapply after
+    autoSquash = true  ; auto-squash fixup! / squash! commits
+
 [diff]
     tool = vimdiff
+    colorMoved = zebra  ; distinguish moved code from added/removed
+    colorMovedWS = allow-indentation-change
 
 [merge]
     tool = vimdiff
-    conflictstyle = diff3
+    conflictstyle = zdiff3  ; like diff3 but cleaner; needs git 2.35+
 
 [rerere]
     enabled = true  ; reuse recorded conflict resolutions
+
+[help]
+    autocorrect = prompt  ; suggest corrections for mistyped commands
 
 [init]
     defaultBranch = main

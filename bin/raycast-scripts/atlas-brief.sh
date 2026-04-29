@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 # @raycast.schemaVersion 1
-# @raycast.title Brain — Generate today's brief
+# @raycast.title Atlas — Generate today's brief
 # @raycast.mode fullOutput
-# @raycast.packageName Brain
+# @raycast.packageName Atlas
 # @raycast.icon 📰
 # @raycast.description Run /daily-brief on-demand
 # @raycast.author Matt Chapman

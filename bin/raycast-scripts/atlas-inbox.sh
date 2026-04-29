@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 # @raycast.schemaVersion 1
-# @raycast.title Brain — Inbox
+# @raycast.title Atlas — Inbox
 # @raycast.mode compact
-# @raycast.packageName Brain
+# @raycast.packageName Atlas
 # @raycast.icon 📥
 # @raycast.argument1 { "type": "text", "placeholder": "Inbox item" }
 # @raycast.description Append an item to the inbox
@@ -16,7 +16,7 @@ vault="$HOME/atlas"
 file="$vault/inbox.md"
 ts="$(date +%Y-%m-%dT%H:%M)"
 
-# Priority/date prefix parsing (same as brain-action.sh)
+# Priority/date prefix parsing (same as atlas-action.sh)
 priority=""
 if [[ "$text" == "!!! "* ]]; then priority="⏬"; text="${text#!!! }"; fi
 if [[ "$text" == "!! "* ]]; then priority="🔼"; text="${text#!! }"; fi

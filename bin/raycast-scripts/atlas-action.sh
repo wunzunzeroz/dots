@@ -2,9 +2,9 @@
 
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title Brain — Action (today)
+# @raycast.title Atlas — Action (today)
 # @raycast.mode compact
-# @raycast.packageName Brain
+# @raycast.packageName Atlas
 
 # Optional parameters:
 # @raycast.icon ✅

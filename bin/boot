@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+die() {
+  printf 'boot: %s\n' "$1" >&2
+  exit 1
+}
+
+main() {
+  echo "boot: skeleton OK"
+}
+
+main "$@"

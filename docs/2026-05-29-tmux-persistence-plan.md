@@ -119,7 +119,7 @@ Expected: `tmux-continuum  tmux-resurrect  tpm`
 - [ ] **Step 4: Take a first safety snapshot of current live state**
 
 Run: `~/.tmux/plugins/tmux-resurrect/scripts/save.sh`
-Then: `ls -l ~/.tmux/resurrect/last && cat ~/.tmux/resurrect/last | head -5`
+Then: `ls -l ~/.local/share/tmux/resurrect/last && cat ~/.local/share/tmux/resurrect/last | head -5`
 Expected: a `last` symlink → a `tmux_resurrect_*.txt` file listing your current sessions/windows/panes. (This is your rollback safety net.)
 
 - [ ] **Step 5: Commit**
@@ -291,8 +291,12 @@ git commit -m "feat(tmux): route Claude keybinds/aliases through claude-pane.sh"
 # Tab-separated columns: session  window  pane  cwd  session-id  name
 set -u
 
-out="${HOME}/.tmux/resurrect/claude-panes.tsv"
-mkdir -p "$(dirname "$out")"
+# Resolve resurrect's snapshot dir (honour @resurrect-dir; else XDG default).
+rdir="$(tmux show-option -gqv @resurrect-dir 2>/dev/null)"
+rdir="${rdir:-$HOME/.local/share/tmux/resurrect}"
+case "$rdir" in "~/"*) rdir="$HOME/${rdir#\~/}";; esac
+out="$rdir/claude-panes.tsv"
+mkdir -p "$rdir"
 : > "$out"
 
 # Iterate by pane id (stable within a server) to read options reliably; store
@@ -326,7 +330,7 @@ set -g @resurrect-hook-post-save-all '~/.tmux/scripts/resurrect-save-claude.sh'
 Run: `tmux source-file ~/.tmux.conf`
 Launch a throwaway Claude pane: `prefix+P`, name `save-test`.
 Run a save: `~/.tmux/plugins/tmux-resurrect/scripts/save.sh`
-Run: `grep save-test ~/.tmux/resurrect/claude-panes.tsv`
+Run: `grep save-test ~/.local/share/tmux/resurrect/claude-panes.tsv`
 Expected: a 6-field tab-separated line ending in the UUID and `save-test`. Quit the test pane.
 
 - [ ] **Step 4: Commit**
@@ -355,7 +359,10 @@ git commit -m "feat(tmux): resurrect post-save hook persists Claude pane→sessi
 # rebuilt panes (as bare shells in the right cwd); we respawn the Claude ones.
 set -u
 
-in="${HOME}/.tmux/resurrect/claude-panes.tsv"
+rdir="$(tmux show-option -gqv @resurrect-dir 2>/dev/null)"
+rdir="${rdir:-$HOME/.local/share/tmux/resurrect}"
+case "$rdir" in "~/"*) rdir="$HOME/${rdir#\~/}";; esac
+in="$rdir/claude-panes.tsv"
 [ -f "$in" ] || exit 0
 wrapper="${HOME}/.tmux/scripts/claude-pane.sh"
 
@@ -393,7 +400,7 @@ run '~/.tmux/plugins/tmux-resurrect/resurrect.tmux'
 run '~/.tmux/plugins/tmux-continuum/continuum.tmux'
 ```
 
-NOTE: the save/restore hooks write to `~/.tmux/resurrect/claude-panes.tsv` (HOME-based, shared). For the isolated test, temporarily point them at the test dir by exporting nothing — instead the test below seeds and inspects `/tmp/sprtest-resurrect` for the resurrect snapshot and uses the same sidecar; this is acceptable because the test uses unique session names. If you prefer full isolation of the sidecar, edit the two hook scripts' `out`/`in` to honour `${RESURRECT_DIR:-$HOME/.tmux/resurrect}` and export `RESURRECT_DIR=/tmp/sprtest-resurrect` for the test server.
+NOTE: the hooks resolve their dir from `@resurrect-dir` (falling back to the XDG default). Because this test config sets `@resurrect-dir '/tmp/sprtest-resurrect'`, both resurrect's snapshot AND the `claude-panes.tsv` sidecar land in the test dir automatically — fully isolated from your real `~/.local/share/tmux/resurrect`. No edits to the hook scripts are needed.
 
 - [ ] **Step 4: Run the isolated save→kill→restore cycle**
 
@@ -549,7 +556,7 @@ git commit -m "feat(tmux): one-time helper to add Ghostty to macOS Login Items"
 
 Ensure your working sessions are set up as normal, with at least one window containing **two Claude panes in the same directory** (the collision case). Trigger a save so the snapshot + sidecar are fresh: `prefix+S`. Then confirm:
 
-Run: `wc -l ~/.tmux/resurrect/claude-panes.tsv && cat ~/.tmux/resurrect/last`
+Run: `wc -l ~/.local/share/tmux/resurrect/claude-panes.tsv && cat ~/.local/share/tmux/resurrect/last`
 Expected: sidecar has a line per Claude pane; `last` points at a recent snapshot.
 
 - [ ] **Step 2: Reboot**
@@ -589,4 +596,4 @@ git add -A docs/ && git commit -m "docs(tmux): mark session-persistence verified
 
 - **Spec coverage:** core stack (T1), pane-scrollback (T1), continuum auto-save/restore (T1), retire custom scripts + S/R rebind (T2), durable session-id wrapper (T3) + rewire (T4), post-save sidecar (T5), post-restore resume incl. same-cwd (T6), Ghostty login auto-start (T7+T8), reboot acceptance + no-stray-session + label restore (T9). Keystone (`--session-id`/`--resume`) gated first (T0).
 - **Open risks** from the spec are each pinned to a task: keystone→T0; pane addressing→T6; Ghostty wiring/stray session→T7+T9; hook quoting (`printf %q`)→T6 script; resume-failure→`exec` semantics noted in T3 (pane closes on failure, consistent with current window-on-exit behaviour).
-- **Type/name consistency:** pane option names `@claude-session-id` / `@claude-pane`, sidecar path `~/.tmux/resurrect/claude-panes.tsv`, and wrapper signature `claude-pane.sh <name> [session-id]` are used identically across T3/T4/T5/T6.
+- **Type/name consistency:** pane option names `@claude-session-id` / `@claude-pane`, sidecar path `<resurrect-dir>/claude-panes.tsv` (dir resolved dynamically; XDG default `~/.local/share/tmux/resurrect`), and wrapper signature `claude-pane.sh <name> [session-id]` are used identically across T3/T4/T5/T6.

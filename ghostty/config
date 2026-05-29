@@ -1,3 +1,7 @@
 font-family = JetBrainsMono NF
 font-size = 14
 theme = TokyoNight Storm
+
+# Drop every window into tmux; on login this starts the server and
+# tmux-continuum auto-restores the saved sessions.
+command = /Users/mattchapman/.tmux/scripts/ghostty-tmux.sh

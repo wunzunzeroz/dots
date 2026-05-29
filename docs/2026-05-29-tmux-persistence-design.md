@@ -91,9 +91,11 @@ options + `respawn-pane`, Claude's `--session-id`/`--resume`):
    - On Claude exit/failure, fall back to a shell so the pane doesn't vanish.
 
 2. **post-save hook** (`@resurrect-hook-post-save-all`) → `scripts/resurrect-save-claude.sh`
-   writes `~/.tmux/resurrect/claude-panes.tsv`:
-   `session ⇥ window ⇥ pane ⇥ cwd ⇥ session-id ⇥ name` for every pane carrying
-   `@claude-session-id`. (continuum's 15-min auto-save invokes this too.)
+   writes `claude-panes.tsv` into resurrect's snapshot dir (resolved
+   dynamically from `@resurrect-dir`; XDG default `~/.local/share/tmux/resurrect`
+   on this machine): `session ⇥ window ⇥ pane ⇥ cwd ⇥ session-id ⇥ name` for
+   every pane carrying `@claude-session-id`. (continuum's 15-min auto-save
+   invokes this too.)
 
 3. **post-restore hook** (`@resurrect-hook-post-restore-all`) → `scripts/resurrect-restore-claude.sh`
    reads the sidecar and, for each entry,

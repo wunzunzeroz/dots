@@ -8,6 +8,14 @@ set -euo pipefail
 DOTS="$(cd "$(dirname "$0")" && pwd)"
 TS="$(date +%Y%m%d-%H%M%S)"
 
+# Homebrew formulas the zsh config sources at startup.
+BREW_FORMULAS=(
+  starship
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  rbenv
+)
+
 # Format: "<target relative to $HOME> <source relative to $DOTS>"
 LINKS=(
   ".zshrc                    zsh/.zshrc"
@@ -23,8 +31,10 @@ LINKS=(
   ".zsh/conf                 zsh/conf"
   ".tmux/conf                tmux/conf"
   ".tmux/scripts             tmux/scripts"
+  ".claude/settings.json     claude/settings.json"
   ".claude/agent-memory      claude/agent-memory"
   ".claude/agents            claude/agents"
+  ".claude/plugins/claude-hud/config.json claude/plugins/claude-hud/config.json"
 )
 
 link() {
@@ -51,6 +61,19 @@ link() {
   ln -s "$source" "$target"
   echo "+ $target → $source"
 }
+
+if command -v brew >/dev/null 2>&1; then
+  missing=()
+  for f in "${BREW_FORMULAS[@]}"; do
+    brew list --formula "$f" >/dev/null 2>&1 || missing+=("$f")
+  done
+  if (( ${#missing[@]} )); then
+    echo "→ brew install ${missing[*]}"
+    brew install "${missing[@]}"
+  fi
+else
+  echo "✗ brew not found — skipping ${BREW_FORMULAS[*]}"
+fi
 
 for entry in "${LINKS[@]}"; do
   read -r tgt src <<< "$entry"

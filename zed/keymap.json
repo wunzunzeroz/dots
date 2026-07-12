@@ -84,4 +84,10 @@
       "j k": "vim::NormalBefore",
     },
   },
+  {
+    "context": "(VimControl && !menu)",
+    "bindings": {
+      "space": null, // Disable the default action vim::WrappingRight
+    },
+  },
 ]

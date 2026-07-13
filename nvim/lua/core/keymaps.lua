@@ -55,6 +55,7 @@ map("n", "<leader>us", "<cmd>set spell!<cr>", { desc = "Toggle spell" })
 map("n", "<leader>ul", "<cmd>set relativenumber! number!<cr>", { desc = "Toggle line numbers" })
 map("n", "<leader>ur", function() require("render-markdown").toggle() end, { desc = "Toggle markdown render" })
 map("n", "<leader>ud", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, { desc = "Toggle diagnostics" })
+map("n", "<leader>ui", function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end, { desc = "Toggle inlay hints" })
 
 -- Quit
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit all" })

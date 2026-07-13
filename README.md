@@ -39,3 +39,11 @@ cd ~/dots
 
 `install.sh` is idempotent. Existing real files are moved aside as
 `<file>.bak.<timestamp>` before being replaced with a symlink.
+
+### Neovim prerequisites
+
+`install.sh` installs nvim + its brew-able deps (ripgrep, fd, fzf, lazygit).
+The Neovim config additionally assumes **Node.js** (via nvm) for the
+TypeScript/ESLint/Prettier tooling and the **Xcode command-line tools**
+(`xcode-select --install`) so nvim-treesitter can compile parsers. On first
+launch, `:Lazy` installs plugins and Mason installs the LSP servers/formatters.

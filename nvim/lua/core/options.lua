@@ -40,6 +40,9 @@ opt.swapfile = false
 -- which-key pops quickly
 opt.timeoutlen = 300
 
+-- Snappier CursorHold (snacks word-highlight, gitsigns) than the 4s default
+opt.updatetime = 250
+
 -- (conceallevel is set per-buffer for prose in autocmds.lua; render-markdown
 --  manages it in markdown windows.)
 

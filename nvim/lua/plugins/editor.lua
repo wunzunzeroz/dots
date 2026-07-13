@@ -30,6 +30,24 @@ return {
     opts = {},
   },
   {
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    dependencies = {
+      -- provides the @function/@class textobject queries mini.ai reads
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
+    },
+    opts = function()
+      local ai = require("mini.ai")
+      return {
+        n_lines = 500,
+        custom_textobjects = {
+          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
+          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
+        },
+      }
+    end,
+  },
+  {
     "folke/flash.nvim",
     event = "VeryLazy",
     opts = {},

@@ -61,6 +61,7 @@ Leaves: `<leader>e` explorer · `<leader>.` scratch · `<leader><Space>` buffers
 | `gsd{char}` | **Surround delete** (e.g. `gsd"`) |
 | `gsr{old}{new}` | **Surround replace** (e.g. `gsr"'`) |
 | `gsf` / `gsF` | Surround find (right / left) |
+| `cif` `daf` `vac` `dia` … | **Textobjects** (mini.ai): operator + `i`/`a` + `f` function · `c` class · `a` argument · `t` tag · brackets/quotes |
 | `<` / `>` (visual) | Indent left / right, keeping the selection |
 | `(`, `[`, `{`, `"` … | Auto-close pairs (mini.pairs) |
 
@@ -104,6 +105,7 @@ Formatting is **manual only** — nothing formats on save.
 | `sg` | Grep across project (also `<leader>/`) |
 | `sw` | Grep word under cursor |
 | `ss` | Document symbols |
+| `sS` | Workspace symbols (whole project) |
 | `sd` | Diagnostics list |
 | `sh` | Help tags |
 | `sr` | Resume last picker |
@@ -115,6 +117,7 @@ Formatting is **manual only** — nothing formats on save.
 |-----|--------|
 | `gg` | Lazygit (full git UI) |
 | `gl` | Git log |
+| `go` | Open current file/line on the remote (GitHub) |
 | `gb` | Blame line |
 | `gd` | Diff current file |
 | `ghs` | Stage hunk (works on a visual selection too) |
@@ -149,6 +152,7 @@ Formatting is **manual only** — nothing formats on save.
 | `uz` | Zen mode (distraction-free) |
 | `ur` | Toggle markdown render |
 | `ud` | Toggle diagnostics |
+| `ui` | Toggle inlay hints |
 
 ## `<leader>q` — quit
 

@@ -45,6 +45,7 @@ return {
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Grep word", mode = { "n", "x" } },
     { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Symbols" },
+    { "<leader>sS", function() Snacks.picker.lsp_workspace_symbols() end, desc = "Workspace symbols" },
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>sh", function() Snacks.picker.help() end, desc = "Help tags" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume last picker" },
@@ -58,6 +59,7 @@ return {
     -- git
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git log" },
+    { "<leader>go", function() Snacks.gitbrowse() end, desc = "Open in browser", mode = { "n", "x" } },
     -- ui
     { "<leader>uz", function() Snacks.zen() end, desc = "Zen mode" },
   },

@@ -8,12 +8,18 @@ set -euo pipefail
 DOTS="$(cd "$(dirname "$0")" && pwd)"
 TS="$(date +%Y%m%d-%H%M%S)"
 
-# Homebrew formulas the zsh config sources at startup.
+# Homebrew formulas the shell and editor configs depend on.
 BREW_FORMULAS=(
   starship
   zsh-autosuggestions
   zsh-syntax-highlighting
   rbenv
+  # Neovim + its runtime deps (pickers, treesitter builds, git UI).
+  # Node (via nvm) and the Xcode CLT are assumed present — see README.
+  neovim
+  ripgrep
+  fd
+  fzf
   lazygit
 )
 

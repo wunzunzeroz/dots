@@ -26,8 +26,22 @@ return {
     })
 
     -- Per-server settings (merged over lspconfig's shipped defaults).
+    local ts_inlay_hints = {
+      parameterNames = { enabled = "literals" },
+      parameterTypes = { enabled = true },
+      variableTypes = { enabled = true },
+      propertyDeclarationTypes = { enabled = true },
+      functionLikeReturnTypes = { enabled = true },
+      enumMemberValues = { enabled = true },
+    }
+
     local servers = {
-      vtsls = {},
+      vtsls = {
+        settings = {
+          typescript = { inlayHints = ts_inlay_hints },
+          javascript = { inlayHints = ts_inlay_hints },
+        },
+      },
       eslint = {},
       bashls = {},
       marksman = {},

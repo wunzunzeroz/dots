@@ -20,6 +20,7 @@ opt.termguicolors = true
 opt.signcolumn = "yes" -- stable gutter; no shift when signs appear
 opt.cursorline = true
 opt.laststatus = 3 -- one global statusline
+opt.showmode = false -- mode is shown in lualine; hide the native "-- INSERT --"
 
 -- Indentation: 2-space, web-friendly
 opt.expandtab = true

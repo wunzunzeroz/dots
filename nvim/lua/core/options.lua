@@ -21,6 +21,7 @@ opt.signcolumn = "yes" -- stable gutter; no shift when signs appear
 opt.cursorline = true
 opt.laststatus = 3 -- one global statusline
 opt.showmode = false -- mode is shown in lualine; hide the native "-- INSERT --"
+opt.cmdheight = 0 -- reclaim the command line row; lualine sits flush at the bottom
 
 -- Indentation: 2-space, web-friendly
 opt.expandtab = true

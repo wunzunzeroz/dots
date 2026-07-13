@@ -14,6 +14,7 @@ BREW_FORMULAS=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   rbenv
+  lazygit
 )
 
 # Format: "<target relative to $HOME> <source relative to $DOTS>"
@@ -23,6 +24,7 @@ LINKS=(
   ".aerospace.toml           aerospace/aerospace.toml"
   ".gitconfig                .gitconfig"
   ".ideavimrc                .ideavimrc"
+  ".config/nvim              nvim"
   ".config/starship.toml     zsh/themes/starship.toml"
   ".config/ghostty/config    ghostty/config"
   ".config/zed/keymap.json   zed/keymap.json"

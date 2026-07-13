@@ -21,6 +21,7 @@ Matt's macOS dotfiles.
 | `claude/` | Claude Code agent memory and agent definitions |
 | `docs/superpowers/` | Live specs and plans (shipped work archived under `archive/`) |
 | `ghostty/` | Ghostty terminal config |
+| `nvim/` | Neovim config (from-scratch, lazy.nvim) |
 | `tmux/` | Modular tmux config (`tmux.conf` + `conf/` + `scripts/`) |
 | `zed/` | Zed keymap and settings |
 | `zsh/` | Modular zsh config (`.zshrc` + `conf/` + Starship theme) |

@@ -18,6 +18,7 @@ everything into `$HOME`.
 | `docs/superpowers/` | Specs and plans for in-flight work |
 | `docs/superpowers/archive/` | Shipped specs/plans — read-only history |
 | `ghostty/`, `tmux/`, `zed/`, `zsh/` | Self-explanatory |
+| `nvim/` | Neovim (from-scratch, lazy.nvim) |
 
 ## Workflow conventions
 

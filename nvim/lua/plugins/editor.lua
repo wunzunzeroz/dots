@@ -11,7 +11,18 @@ return {
   {
     "echasnovski/mini.surround",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      -- gs* prefix so bare `s` stays free for flash (no prefix collision)
+      mappings = {
+        add = "gsa",
+        delete = "gsd",
+        find = "gsf",
+        find_left = "gsF",
+        highlight = "gsh",
+        replace = "gsr",
+        update_n_lines = "gsn",
+      },
+    },
   },
   {
     "echasnovski/mini.pairs",

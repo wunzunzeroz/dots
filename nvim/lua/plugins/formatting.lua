@@ -3,12 +3,20 @@ return {
   cmd = "ConformInfo",
   keys = {
     {
-      "<leader>p",
+      "<leader>cf",
       function()
         require("conform").format({ async = true, lsp_format = "fallback" })
       end,
       mode = { "n", "v" },
       desc = "Format buffer",
+    },
+    {
+      "<leader>p",
+      function()
+        require("conform").format({ async = true, lsp_format = "fallback" })
+      end,
+      mode = { "n", "v" },
+      desc = "Format buffer (alias)",
     },
   },
   opts = {

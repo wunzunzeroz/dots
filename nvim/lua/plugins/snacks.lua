@@ -35,26 +35,30 @@ return {
     },
   },
   keys = {
-    -- find
+    -- find (files)
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
-    { "<leader>ft", function() Snacks.picker.grep() end, desc = "Grep text" },
     { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent files" },
-    { "<leader>fs", function() Snacks.picker.lsp_symbols() end, desc = "Document symbols" },
-    { "<leader>fn", function() vim.cmd("enew") end, desc = "New file" },
-    { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Grep word", mode = { "n", "x" } },
-    { "<leader>fd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find config file" },
-    { "<leader>fh", function() Snacks.picker.help() end, desc = "Help tags" },
+    { "<leader>fn", function() vim.cmd("enew") end, desc = "New file" },
+    { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
+    -- search (content)
+    { "<leader>sg", function() Snacks.picker.grep() end, desc = "Grep" },
+    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "Grep word", mode = { "n", "x" } },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "Symbols" },
+    { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "Diagnostics" },
+    { "<leader>sh", function() Snacks.picker.help() end, desc = "Help tags" },
+    { "<leader>sr", function() Snacks.picker.resume() end, desc = "Resume last picker" },
+    { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+    { "<leader>/", function() Snacks.picker.grep() end, desc = "Grep" },
+    -- buffers / explorer / scratch
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "Buffers" },
-    -- explorer
     { "<leader>e", function() Snacks.explorer() end, desc = "Explorer" },
-    -- scratch
     { "<leader>.", function() Snacks.scratch() end, desc = "Toggle scratch" },
     { "<leader>S", function() Snacks.scratch.select() end, desc = "Select scratch" },
-    -- git ui
+    -- git
     { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
     { "<leader>gl", function() Snacks.picker.git_log() end, desc = "Git log" },
-    -- zen
+    -- ui
     { "<leader>uz", function() Snacks.zen() end, desc = "Zen mode" },
   },
 }

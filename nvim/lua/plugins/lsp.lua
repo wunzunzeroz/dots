@@ -74,9 +74,9 @@ return {
         map("gy", vim.lsp.buf.type_definition, "Go to type definition")
         map("gD", vim.lsp.buf.declaration, "Go to declaration")
         map("K", vim.lsp.buf.hover, "Hover")
-        map("<leader>rn", vim.lsp.buf.rename, "Rename")
-        map("<leader>rr", vim.lsp.buf.code_action, "Code action")
-        map("<leader>ro", function()
+        map("<leader>cr", vim.lsp.buf.rename, "Rename")
+        map("<leader>ca", vim.lsp.buf.code_action, "Code action")
+        map("<leader>co", function()
           vim.lsp.buf.code_action({
             context = { only = { "source.organizeImports" } },
             apply = true,

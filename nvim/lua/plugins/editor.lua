@@ -2,7 +2,7 @@ return {
   {
     "echasnovski/mini.icons",
     lazy = false,
-    priority = 900,
+    priority = 1100,
     config = function()
       require("mini.icons").setup()
       MiniIcons.mock_nvim_web_devicons()

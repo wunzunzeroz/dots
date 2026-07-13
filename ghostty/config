@@ -2,6 +2,10 @@ font-family = JetBrainsMono NF
 font-size = 14
 theme = TokyoNight Storm
 
+# Left Option acts as Alt so Neovim's <A-…> mappings work; right Option is
+# left as the macOS compose key for special characters.
+macos-option-as-alt = left
+
 # Drop every window into tmux; on login this starts the server and
 # tmux-continuum auto-restores the saved sessions.
 command = /Users/mattchapman/.tmux/scripts/ghostty-tmux.sh

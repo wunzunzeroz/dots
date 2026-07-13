@@ -28,7 +28,6 @@ opt.expandtab = true
 opt.shiftwidth = 2
 opt.tabstop = 2
 opt.softtabstop = 2
-opt.smartindent = true
 
 -- Splits open to the right / below
 opt.splitright = true
@@ -41,8 +40,8 @@ opt.swapfile = false
 -- which-key pops quickly
 opt.timeoutlen = 300
 
--- Rendered markdown needs concealing
-opt.conceallevel = 2
+-- (conceallevel is set per-buffer for prose in autocmds.lua; render-markdown
+--  manages it in markdown windows.)
 
 -- Treesitter-based folding, everything unfolded by default
 opt.foldmethod = "expr"

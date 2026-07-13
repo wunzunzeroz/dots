@@ -18,7 +18,7 @@ return {
         "lua-language-server",
         "json-lsp",
         "yaml-language-server",
-        -- Formatters (used by conform in Task 8)
+        -- Formatters (used by conform)
         "prettierd",
         "stylua",
         "shfmt",
@@ -56,6 +56,10 @@ return {
       },
     }
 
+    -- Advertise blink.cmp's extended completion capabilities to every server
+    -- (import-source labels, insert-replace, lazy doc resolution, etc.).
+    vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
+
     for name, cfg in pairs(servers) do
       vim.lsp.config(name, cfg)
       vim.lsp.enable(name)
@@ -66,7 +70,9 @@ return {
       group = vim.api.nvim_create_augroup("lsp_attach", { clear = true }),
       callback = function(ev)
         local map = function(keys, fn, desc)
-          vim.keymap.set("n", keys, fn, { buffer = ev.buf, desc = desc })
+          -- nowait: bare `gr`/`gi`/etc. are prefixes of nvim 0.11's default gr*
+          -- maps, so without this they'd wait `timeoutlen` before firing.
+          vim.keymap.set("n", keys, fn, { buffer = ev.buf, desc = desc, nowait = true })
         end
         map("gd", vim.lsp.buf.definition, "Go to definition")
         map("gr", vim.lsp.buf.references, "References")

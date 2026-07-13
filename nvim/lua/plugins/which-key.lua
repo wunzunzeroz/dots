@@ -14,6 +14,7 @@ return {
       { "<leader>z", group = "fold" },
       { "<leader>u", group = "ui" },
       { "<leader>q", group = "quit" },
+      { "gs", group = "surround" },
     },
   },
 }

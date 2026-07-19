@@ -13,7 +13,7 @@ everything into `$HOME`.
 | Path | Tool |
 |------|------|
 | `aerospace/` | Aerospace WM |
-| `bin/` | Personal binaries (boot, atlas-* raycast scripts) |
+| `bin/` | Personal binaries (boot) |
 | `claude/` | Claude Code config (symlinked into `~/.claude/`) |
 | `docs/superpowers/` | Specs and plans for in-flight work |
 | `docs/superpowers/archive/` | Shipped specs/plans — read-only history |
@@ -31,10 +31,10 @@ everything into `$HOME`.
 
 ## Naming
 
-The Obsidian vault was renamed `brain` → `atlas`. The Raycast scripts
-in `bin/raycast-scripts/` are named `atlas-*` and target `~/atlas`, but
-their user-facing Raycast titles still say "Brain — ..." in some places
-intentionally. Don't "fix" the title strings unless asked.
+The Obsidian vault was renamed `brain` → `atlas`. The `atlas-*` Raycast
+capture scripts that lived in `bin/raycast-scripts/` were retired
+2026-07-20 (unused; the vault moved to a mission-based ops structure) —
+recoverable from git history.
 
 ## Don't
 

@@ -62,14 +62,38 @@
   },
   "model": "opus[1m]",
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/hooks/tmux-state.sh idle" }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/hooks/tmux-state.sh working" }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
         "hooks": [
-          {
-            "type": "command",
-            "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // empty') && [ -n \"$FILE\" ] && npx prettier --write \"$FILE\" 2>/dev/null || true"
-          }
+          { "type": "command", "command": "FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r '.file_path // empty') && [ -n \"$FILE\" ] && npx prettier --write \"$FILE\" 2>/dev/null || true" }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/hooks/tmux-state.sh working" }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/hooks/tmux-state.sh idle" }
         ]
       }
     ],
@@ -77,10 +101,8 @@
       {
         "matcher": "",
         "hooks": [
-          {
-            "type": "command",
-            "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'"
-          }
+          { "type": "command", "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'" },
+          { "type": "command", "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/hooks/tmux-state.sh awaiting" }
         ]
       }
     ]

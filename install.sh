@@ -42,6 +42,7 @@ LINKS=(
   ".claude/settings.json     claude/settings.json"
   ".claude/agent-memory      claude/agent-memory"
   ".claude/agents            claude/agents"
+  ".claude/hooks             claude/hooks"
   ".claude/plugins/claude-hud/config.json claude/plugins/claude-hud/config.json"
 )
 

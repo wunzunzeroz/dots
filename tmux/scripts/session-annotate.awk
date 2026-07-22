@@ -69,7 +69,7 @@ BEGIN {
   ic["psql"]  = "󰆼"; ic["mysql"] = "󰆼"; ic["postgres"] = "󰆼"
   ic["nvim"]  = "󰏫"; ic["vim"] = "󰏫"    # pencil (nf-md; font lacks a vim glyph)
   ic_def      = "󰆍"                     # console (fallback)
-  WINW = 16                             # window-name column width
+  WINW = 32                             # window-name column width
 }
 
 $1 == "P" {

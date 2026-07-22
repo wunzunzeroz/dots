@@ -212,7 +212,7 @@ keeping them last means nothing that must align sits after them.
   index (`session:index`), so window names with colons/spaces are unambiguous.
 - **Active window (session row):** the session's current window name
   (`#{window_name}` on `list-sessions` resolves to the active window), in blue
-  `#7aa2f7`. Padded/truncated to a fixed 16 columns — plain text pads reliably.
+  `#7aa2f7`. Padded/truncated to a fixed 32 columns — plain text pads reliably.
 - **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
 - **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
   (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.

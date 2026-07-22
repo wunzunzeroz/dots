@@ -5,10 +5,12 @@
 # Without fzf: choose-tree.
 #
 # The current session ($1, passed from the keybind as #{session_name}) is
-# pinned to the top. Pipeline: pane data + MRU-sorted session names ->
-# session-annotate.awk -> sort (by group, then MRU) -> fzf. Each fzf row is
-# "<name><TAB><display>"; --with-nth=2.. hides the name, cut -f1 recovers it.
-# Section-header rows carry an empty name, so selecting one is a no-op.
+# pinned to the top. Each session lists its windows beneath it. Pipeline: pane
+# + window + MRU-sorted session data -> session-annotate.awk -> sort (group,
+# rank, sub) -> fzf. Each row is "<session><TAB><window_index><TAB><display>";
+# --with-nth=3.. hides the target fields. Selecting a session row switches to
+# it (last-active window); a window row also select-window's into that window.
+# Header rows carry an empty session field, so selecting one is a no-op.
 
 [ -f "$HOME/.tmux/scripts/fzf-theme.sh" ] && . "$HOME/.tmux/scripts/fzf-theme.sh"
 
@@ -25,27 +27,29 @@ esac
 if command -v fzf >/dev/null 2>&1; then
     list=$(
         {
-            tmux list-panes -a -F "P${TAB}#{session_name}${TAB}#{pane_current_command}${TAB}#{@claude-state}" 2>/dev/null
+            tmux list-panes -a -F "P${TAB}#{session_name}${TAB}#{window_index}${TAB}#{pane_current_command}${TAB}#{@claude-state}" 2>/dev/null
+            tmux list-windows -a -F "W${TAB}#{session_name}${TAB}#{window_index}${TAB}#{window_name}${TAB}#{window_active}" 2>/dev/null
             tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}${TAB}#{window_name}" 2>/dev/null \
                 | sort -rn | cut -f2-
         } \
             | awk -v cur="$CURRENT" -f "$ANNOTATE" \
-            | sort -t"$TAB" -k1,1n -k2,2n \
-            | cut -f3-
+            | sort -t"$TAB" -k1,1n -k2,2n -k3,3n \
+            | cut -f4-
     )
     [ -z "$list" ] && exit 0
 
-    # Loop so a section-header row (empty name field) re-opens the picker
-    # instead of closing it; a real session switches, Esc/cancel exits.
+    # Loop so a section-header row (empty session field) re-opens the picker
+    # instead of closing it; a real row switches, Esc/cancel exits.
     while true; do
         line=$(printf '%s\n' "$list" \
-            | fzf --ansi --delimiter="$TAB" --with-nth=2.. \
-                  --header='󰮪 Switch session' --border-label=' sessions ') || break
+            | fzf --ansi --delimiter="$TAB" --with-nth=3.. \
+                  --header='󰮪 Switch session / window' --border-label=' sessions ') || break
         session=$(printf '%s' "$line" | cut -f1)
-        if [ -n "$session" ]; then
-            tmux switch-client -t "$session"
-            break
-        fi
+        [ -z "$session" ] && continue
+        window=$(printf '%s' "$line" | cut -f2)
+        tmux switch-client -t "$session"
+        [ -n "$window" ] && tmux select-window -t "$session:$window"
+        break
     done
 else
     tmux choose-tree -s -O time

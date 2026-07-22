@@ -162,45 +162,57 @@ Per session, accumulate: `running` (busy count), and counts of `working` /
 
 ## Sort & display
 
-Sessions are grouped, not flat-sorted. The current session (passed to the awk
-from the keybind as `#{session_name}`) is pinned to the top; the rest split into
-a **needs-attention** group (a Claude awaiting input) and a **recent** group,
-each in MRU order (`session_last_attached`, `sort -rn`). The awk emits
-`group <tab> rank <tab> name <tab> display`; the picker sorts by `group,rank`.
+The picker is a **two-level list**: a row per session (grouped current /
+needs-attention / recent), and — for multi-window sessions — a row per window
+beneath it. Selecting a session row switches to it (its last-active window);
+selecting a window row switches and `select-window`s into that window. This
+makes fzf search work at the window level: typing `WEATHER` jumps straight to
+`LOGBOOK:WEATHER`.
+
+The current session (passed to the awk from the keybind as `#{session_name}`)
+is pinned to the top; the rest split into a **needs-attention** group (a Claude
+awaiting input) and a **recent** group, each in MRU order (`session_last_attached`,
+`sort -rn`). The awk emits `group <tab> rank <tab> sub <tab> session <tab>
+window_index <tab> display`; the picker sorts by `group,rank,sub`.
 
 - **Groups:** `0` current · `1` needs-attention · `2` recent. A session appears
   in exactly one group (current wins over awaiting).
+- **`sub`** orders rows within a session: `0` for the session row,
+  `window_index + 1` for window rows, so windows follow their session in index
+  order. Window rows are emitted only when `window_count > 1` (a lone window
+  would just restate the session row).
 - **Section headers** (`─ needs attention ─`, `─ recent ─`) are emitted for each
-  non-empty non-current group with `rank 0` so they sort to the head of their
-  section. Header rows carry an **empty name field**, so selecting one is a
-  no-op via the picker's `[ -n "$session" ]` guard. The current session has no
-  header — just a marker.
-- fzf uses a hidden leading column holding the raw session name, shown via
-  `--delimiter '\t' --with-nth 2..`; selection is extracted with `cut -f1`
-  (robust to spaces/colons, and to the empty-name header rows).
+  non-empty non-current group with `rank 0`. Header rows carry an **empty
+  session field**, so selecting one is a no-op (the picker's `[ -z ] && continue`
+  re-opens the list). The current session has no header — just a marker.
+- fzf hides the two leading target columns (`session`, `window_index`) via
+  `--with-nth 3..`; selection recovers them with `cut -f1` / `cut -f2`. Robust
+  to spaces/colons in names and to the empty-field header rows.
 
-Column order is `marker · name · running · state · programs`. State labels come
+Per-window stats reuse the same renderer as the session row. State labels come
 **before** the program strip so they sit at a fixed offset after `N running`
 (the run icon is the same glyph on every row) and therefore align across rows.
 The program strip trails last because its icons render at unpredictable widths —
 keeping them last means nothing that must align sits after them.
 
 ```
-● HQ          HQ-CLI            󰜎 4 running   󰥔 2 working    1
-─ needs attention ─
-  DEV         CLAUDE HARNESS    󰜎 4 running   󰂚 1 awaiting
-  LOGBOOK     SMART FIELDS      󰜎 3 running   󰂚 1 awaiting    1
+● HQ          HQ-CLI            󰜎 4 running   󰥔 2 working, 󰒲 1 idle   󰏫 1
+    1         HQ                󰜎 2 running   󰒲 1 idle                󰏫 1
+  > 2         HQ-CLI            󰜎 2 running   󰥔 2 working
 ─ recent ─
-  BUILD       GENERAL-SECURITY  󰜎 5 running   󰎙 3  󰡨 1
-  ADMIRAL     A-VERY-LONG-WIN…  󰜎 2 running
+  LOGBOOK     SMART FIELDS      󰜎 3 running   󰒲 2 idle                󰏫 1
+  > 1         SMART FIELDS      󰜎 2 running   󰒲 1 idle                󰏫 1
+    2         WEATHER           󰜎 1 running   󰎙 1
 ```
 
 - **Current marker:** `●` in purple `#bb9af7` (the active-pane colour) on the
   pinned top row.
-- **Active window:** the session's current window name (`#{window_name}` on
-  `list-sessions` resolves to the active window), in blue `#7aa2f7`, for
-  context when switching. Padded/truncated to a fixed 16 columns — it is plain
-  text, so it pads reliably and keeps everything after it aligned.
+- **Window rows:** window index + name, indented; the session's **active**
+  window is marked `>` in purple, others muted. `select-window` targets by
+  index (`session:index`), so window names with colons/spaces are unambiguous.
+- **Active window (session row):** the session's current window name
+  (`#{window_name}` on `list-sessions` resolves to the active window), in blue
+  `#7aa2f7`. Padded/truncated to a fixed 16 columns — plain text pads reliably.
 - **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
 - **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
   (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.

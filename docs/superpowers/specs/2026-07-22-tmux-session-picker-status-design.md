@@ -186,17 +186,21 @@ The program strip trails last because its icons render at unpredictable widths �
 keeping them last means nothing that must align sits after them.
 
 ```
-● HQ          󰜎 4 running   󰥔 2 working    1
+● HQ          HQ-CLI            󰜎 4 running   󰥔 2 working    1
 ─ needs attention ─
-  DEV         󰜎 4 running   󰂚 1 awaiting
-  LOGBOOK     󰜎 3 running   󰂚 1 awaiting    1
+  DEV         CLAUDE HARNESS    󰜎 4 running   󰂚 1 awaiting
+  LOGBOOK     SMART FIELDS      󰜎 3 running   󰂚 1 awaiting    1
 ─ recent ─
-  BUILD       󰜎 5 running   󰎙 3  󰡨 1
-  ADMIRAL     󰜎 2 running
+  BUILD       GENERAL-SECURITY  󰜎 5 running   󰎙 3  󰡨 1
+  ADMIRAL     A-VERY-LONG-WIN…  󰜎 2 running
 ```
 
 - **Current marker:** `●` in purple `#bb9af7` (the active-pane colour) on the
   pinned top row.
+- **Active window:** the session's current window name (`#{window_name}` on
+  `list-sessions` resolves to the active window), in blue `#7aa2f7`, for
+  context when switching. Padded/truncated to a fixed 16 columns — it is plain
+  text, so it pads reliably and keeps everything after it aligned.
 - **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
 - **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
   (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.

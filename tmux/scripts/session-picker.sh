@@ -26,7 +26,7 @@ if command -v fzf >/dev/null 2>&1; then
     list=$(
         {
             tmux list-panes -a -F "P${TAB}#{session_name}${TAB}#{pane_current_command}${TAB}#{@claude-state}" 2>/dev/null
-            tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}" 2>/dev/null \
+            tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}${TAB}#{window_name}" 2>/dev/null \
                 | sort -rn | cut -f2-
         } \
             | awk -v cur="$CURRENT" -f "$ANNOTATE" \

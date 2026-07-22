@@ -27,6 +27,8 @@ BEGIN {
   c_idle  = esc "[38;2;86;95;137m"     # comment #565f89
   c_muted = esc "[38;2;86;95;137m"     # comment #565f89  (run icon + programs)
   c_cur   = esc "[38;2;187;154;247m"   # purple  #bb9af7  (current marker)
+  c_win   = esc "[38;2;122;162;247m"   # blue    #7aa2f7  (active window name)
+  WINW    = 16                          # active-window column width
   i_await = "󰂚"                         # bell
   i_work  = "󰥔"                         # clock
   i_idle  = "󰒲"                         # snooze
@@ -58,7 +60,7 @@ $1 == "P" {
 }
 
 $1 == "S" {
-  sess = $2
+  sess = $2; win = $3
   rank++
   if (sess == cur)          g = 0
   else if (await[sess] > 0) g = 1
@@ -66,7 +68,11 @@ $1 == "S" {
   seen[g] = 1
 
   mark = (g == 0) ? (c_cur "●" reset " ") : "  "
-  line = mark sprintf("%-12s", sess) "  " c_muted i_run reset " " (run[sess] + 0) " running"
+  # Active window name: plain text, so it pads reliably. Truncate to keep the
+  # columns after it aligned.
+  if (length(win) > WINW) win = substr(win, 1, WINW - 1) "…"
+  line = mark sprintf("%-12s ", sess) c_win sprintf("%-" WINW "s", win) reset \
+         "  " c_muted i_run reset " " (run[sess] + 0) " running"
 
   # State labels come first so they sit at a fixed offset after "N running"
   # (the run icon is the same glyph on every row) and thus align across rows.

@@ -68,18 +68,22 @@ $1 == "S" {
   mark = (g == 0) ? (c_cur "●" reset " ") : "  "
   line = mark sprintf("%-12s", sess) "  " c_muted i_run reset " " (run[sess] + 0) " running"
 
+  # State labels come first so they sit at a fixed offset after "N running"
+  # (the run icon is the same glyph on every row) and thus align across rows.
+  states = ""
+  if (await[sess] > 0) states = states (states == "" ? "" : ", ") c_await i_await sprintf(" %d awaiting", await[sess]) reset
+  if (work[sess]  > 0) states = states (states == "" ? "" : ", ") c_work  i_work  sprintf(" %d working",  work[sess])  reset
+  if (idle[sess]  > 0) states = states (states == "" ? "" : ", ") c_idle  i_idle  sprintf(" %d idle",     idle[sess])  reset
+  if (states != "") line = line "   " states
+
+  # Programs trail at the end: their icons render at unpredictable widths, so
+  # keeping them last means nothing that must align sits after them.
   if (plist[sess] != "") {
     n = split(plist[sess], arr, SUBSEP)
     procs = ""
     for (i = 1; i <= n; i++) procs = procs (procs == "" ? "" : "  ") picon(arr[i]) sprintf(" %d", pc[sess SUBSEP arr[i]])
     line = line "   " c_muted procs reset
   }
-
-  states = ""
-  if (await[sess] > 0) states = states (states == "" ? "" : ", ") c_await i_await sprintf(" %d awaiting", await[sess]) reset
-  if (work[sess]  > 0) states = states (states == "" ? "" : ", ") c_work  i_work  sprintf(" %d working",  work[sess])  reset
-  if (idle[sess]  > 0) states = states (states == "" ? "" : ", ") c_idle  i_idle  sprintf(" %d idle",     idle[sess])  reset
-  if (states != "") line = line "   " states
 
   print g, rank, sess, line
 }

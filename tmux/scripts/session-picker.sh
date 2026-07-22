@@ -23,7 +23,7 @@ case "$CURRENT" in
 esac
 
 if command -v fzf >/dev/null 2>&1; then
-    line=$(
+    list=$(
         {
             tmux list-panes -a -F "P${TAB}#{session_name}${TAB}#{pane_current_command}${TAB}#{@claude-state}" 2>/dev/null
             tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}" 2>/dev/null \
@@ -31,12 +31,22 @@ if command -v fzf >/dev/null 2>&1; then
         } \
             | awk -v cur="$CURRENT" -f "$ANNOTATE" \
             | sort -t"$TAB" -k1,1n -k2,2n \
-            | cut -f3- \
-            | fzf --ansi --delimiter="$TAB" --with-nth=2.. \
-                  --header='󰮪 Switch session' --border-label=' sessions '
+            | cut -f3-
     )
-    session=$(printf '%s' "$line" | cut -f1)
-    [ -n "$session" ] && tmux switch-client -t "$session"
+    [ -z "$list" ] && exit 0
+
+    # Loop so a section-header row (empty name field) re-opens the picker
+    # instead of closing it; a real session switches, Esc/cancel exits.
+    while true; do
+        line=$(printf '%s\n' "$list" \
+            | fzf --ansi --delimiter="$TAB" --with-nth=2.. \
+                  --header='󰮪 Switch session' --border-label=' sessions ') || break
+        session=$(printf '%s' "$line" | cut -f1)
+        if [ -n "$session" ]; then
+            tmux switch-client -t "$session"
+            break
+        fi
+    done
 else
     tmux choose-tree -s -O time
 fi

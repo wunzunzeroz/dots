@@ -174,14 +174,17 @@ each in MRU order (`session_last_attached`, `sort -rn`). The awk emits
   `--delimiter '\t' --with-nth 2..`; selection is extracted with `cut -f1`
   (robust to spaces/colons, and to the empty-name header rows).
 
-Line format (columns aligned with `printf`; Nerd Font icons throughout — chosen
-over emoji, which render at inconsistent widths). Icon + count is used for both
-programs and Claude state:
+Column order is `marker · name · running · state · programs`. State labels come
+**before** the program strip so they sit at a fixed offset after `N running`
+(the run icon is the same glyph on every row) and therefore align across rows.
+The program strip trails last because its icons render at unpredictable widths —
+keeping them last means nothing that must align sits after them.
 
 ```
-● HQ          󰜎 4 running    1        󰥔 2 working
+● HQ          󰜎 4 running   󰥔 2 working    1
 ─ needs attention ─
-  DEV         󰜎 4 running   󰎙 1        󰂚 1 awaiting
+  DEV         󰜎 4 running   󰂚 1 awaiting
+  LOGBOOK     󰜎 3 running   󰂚 1 awaiting    1
 ─ recent ─
   BUILD       󰜎 5 running   󰎙 3  󰡨 1
   ADMIRAL     󰜎 2 running
@@ -190,16 +193,19 @@ programs and Claude state:
 - **Current marker:** `●` in purple `#bb9af7` (the active-pane colour) on the
   pinned top row.
 - **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
-- **Programs:** deduped non-Claude commands as `icon count`, muted `#565f89`, so
-  they read as a quiet "what's here" hint. Map (nf-md where possible): `node`
+- **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
+  (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.
+- **Programs (trailing):** deduped non-Claude commands as `icon count`, muted
+  `#565f89`, a quiet "what's here" hint. Map (nf-md where possible): `node`
   `󰎙`, `python` `󰌠`, `docker` `󰡨`, `git` `󰊢`, `go` `󰟓`, `psql/mysql` `󰆼`,
   `nvim/vim` ``, fallback `󰆍`. Claude's version-string panes are skipped
   (their state icons cover them), detected by a stamped `@claude-state` or a
   `N.N…` command.
-- **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
-  (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.
 - A session with no Claude shows only its running count; an idle Claude still
   counts toward `running` (it is a live process).
+- **Header rows are non-selecting:** the picker loops so choosing a
+  `─ … ─` header (empty name field) re-opens the list instead of closing the
+  popup; a real session switches, Esc exits.
 
 ## Error handling / edge cases
 

@@ -164,17 +164,20 @@ Per session, accumulate: `running` (busy count), and counts of `working` /
   `--delimiter '\t' --with-nth 2..`; selection is extracted with `cut -f1`. This
   replaces the brittle `cut -d: -f1` and is robust to spaces/colons in names.
 
-Line format (columns aligned with `printf`; glyphs easy to retune later):
+Line format (columns aligned with `printf`; state written as words rather than
+glyphs — emoji render at inconsistent widths in the terminal, and words read
+more clearly):
 
 ```
-⏸  LOGBOOK     1 running   ⏸1
-⏸  INFOSEC     3 running   ⏸2
-   HQ          2 running   ⚡1
-   DEV         2 running   ⚡1  ✓1
-   ADMIRAL     2 running
+LOGBOOK      1 running   1 awaiting
+INFOSEC      3 running   2 awaiting
+HQ           2 running   1 working
+DEV          2 running   1 working, 1 idle
+ADMIRAL      2 running
 ```
 
-- `⏸` awaiting · `⚡` working · `✓` idle Claude.
+- State words: `N awaiting` · `N working` · `N idle`, comma-joined when a
+  session has more than one. Awaiting sessions still float to the top.
 - A session with no Claude shows only its running count.
 - An idle Claude is a live process, so it is included in `running`
   (e.g. `DEV` above: 2 running = one working Claude + one idle Claude).

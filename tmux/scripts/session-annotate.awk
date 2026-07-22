@@ -21,11 +21,12 @@ $1 == "P" {
 $1 == "S" {
   sess = $2
   rank++
-  ann = ""
-  if (await[sess] > 0) ann = ann sprintf(" ⏸%d", await[sess])
-  if (work[sess]  > 0) ann = ann sprintf(" ⚡%d", work[sess])
-  if (idle[sess]  > 0) ann = ann sprintf(" ✓%d", idle[sess])
-  disp = sprintf("%-12s %d running%s", sess, run[sess] + 0, ann)
+  states = ""
+  if (await[sess] > 0) states = states (states == "" ? "" : ", ") sprintf("%d awaiting", await[sess])
+  if (work[sess]  > 0) states = states (states == "" ? "" : ", ") sprintf("%d working", work[sess])
+  if (idle[sess]  > 0) states = states (states == "" ? "" : ", ") sprintf("%d idle", idle[sess])
+  disp = sprintf("%-12s %d running", sess, run[sess] + 0)
+  if (states != "") disp = disp "   " states
   prio = (await[sess] > 0) ? 0 : 1
   print prio, rank, sess, disp
 }

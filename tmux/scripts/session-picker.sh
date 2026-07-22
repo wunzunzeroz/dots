@@ -1,16 +1,26 @@
 #!/bin/sh
 # Fuzzy session picker.
-# With fzf: sessions annotated with running counts + Claude state
-# (awaiting-first, then most-recently-attached). Without fzf: choose-tree.
+# With fzf: sessions grouped current / needs-attention / recent, annotated with
+# a running count, the programs running (icon + count), and Claude state.
+# Without fzf: choose-tree.
 #
-# Pipeline: pane data + MRU-sorted session names -> session-annotate.awk
-# -> sort (awaiting first, MRU within) -> fzf. Each fzf row is
+# The current session ($1, passed from the keybind as #{session_name}) is
+# pinned to the top. Pipeline: pane data + MRU-sorted session names ->
+# session-annotate.awk -> sort (by group, then MRU) -> fzf. Each fzf row is
 # "<name><TAB><display>"; --with-nth=2.. hides the name, cut -f1 recovers it.
+# Section-header rows carry an empty name, so selecting one is a no-op.
 
 [ -f "$HOME/.tmux/scripts/fzf-theme.sh" ] && . "$HOME/.tmux/scripts/fzf-theme.sh"
 
 ANNOTATE="$HOME/.tmux/scripts/session-annotate.awk"
 TAB=$(printf '\t')
+
+# Current session: the keybind passes it as $1; fall back to display-message
+# if it is missing or arrived unexpanded.
+CURRENT="${1:-}"
+case "$CURRENT" in
+    *'#{'* | '') CURRENT=$(tmux display-message -p '#{session_name}' 2>/dev/null) ;;
+esac
 
 if command -v fzf >/dev/null 2>&1; then
     line=$(
@@ -19,7 +29,7 @@ if command -v fzf >/dev/null 2>&1; then
             tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}" 2>/dev/null \
                 | sort -rn | cut -f2-
         } \
-            | awk -f "$ANNOTATE" \
+            | awk -v cur="$CURRENT" -f "$ANNOTATE" \
             | sort -t"$TAB" -k1,1n -k2,2n \
             | cut -f3- \
             | fzf --ansi --delimiter="$TAB" --with-nth=2.. \

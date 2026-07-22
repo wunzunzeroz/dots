@@ -157,35 +157,49 @@ Per session, accumulate: `running` (busy count), and counts of `working` /
 
 ## Sort & display
 
-- Start from sessions in MRU order (`session_last_attached`, `sort -rn`).
-- Stable-partition into two groups: `awaiting > 0` first, the rest after. MRU is
-  preserved within each group because the partition is stable.
+Sessions are grouped, not flat-sorted. The current session (passed to the awk
+from the keybind as `#{session_name}`) is pinned to the top; the rest split into
+a **needs-attention** group (a Claude awaiting input) and a **recent** group,
+each in MRU order (`session_last_attached`, `sort -rn`). The awk emits
+`group <tab> rank <tab> name <tab> display`; the picker sorts by `group,rank`.
+
+- **Groups:** `0` current · `1` needs-attention · `2` recent. A session appears
+  in exactly one group (current wins over awaiting).
+- **Section headers** (`─ needs attention ─`, `─ recent ─`) are emitted for each
+  non-empty non-current group with `rank 0` so they sort to the head of their
+  section. Header rows carry an **empty name field**, so selecting one is a
+  no-op via the picker's `[ -n "$session" ]` guard. The current session has no
+  header — just a marker.
 - fzf uses a hidden leading column holding the raw session name, shown via
-  `--delimiter '\t' --with-nth 2..`; selection is extracted with `cut -f1`. This
-  replaces the brittle `cut -d: -f1` and is robust to spaces/colons in names.
+  `--delimiter '\t' --with-nth 2..`; selection is extracted with `cut -f1`
+  (robust to spaces/colons, and to the empty-name header rows).
 
-Line format (columns aligned with `printf`). Each state is a Nerd Font icon +
-count + word, colourised via ANSI SGR (fzf gets `--ansi`). Nerd Font icons are
-used rather than emoji because emoji render at inconsistent widths; the icons
-are single-width in the configured font (same family as the statusbar glyphs):
+Line format (columns aligned with `printf`; Nerd Font icons throughout — chosen
+over emoji, which render at inconsistent widths). Icon + count is used for both
+programs and Claude state:
 
 ```
-DEV          4 running   󰂚 1 awaiting
-LOGBOOK      3 running   󰥔 1 working
-HQ           4 running   󰥔 2 working, 󰒲 1 idle
-INFOSEC      3 running
-ADMIRAL      2 running
+● HQ          󰜎 4 running    1        󰥔 2 working
+─ needs attention ─
+  DEV         󰜎 4 running   󰎙 1        󰂚 1 awaiting
+─ recent ─
+  BUILD       󰜎 5 running   󰎙 3  󰡨 1
+  ADMIRAL     󰜎 2 running
 ```
 
-- `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
-  (cyan `#7dcfff`) · `󰒲` snooze = idle (muted `#565f89`). Colours mirror
-  `tmux/conf/theme.conf`. Multiple states are comma-joined; awaiting sessions
-  still float to the top.
-- A session with no Claude shows only its running count.
-- An idle Claude is a live process, so it is included in `running`
-  (e.g. `DEV` above: 2 running = one working Claude + one idle Claude).
-- fzf section headers (`— awaiting —`) are omitted initially to keep lines
-  dense; can be added later if wanted.
+- **Current marker:** `●` in purple `#bb9af7` (the active-pane colour) on the
+  pinned top row.
+- **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
+- **Programs:** deduped non-Claude commands as `icon count`, muted `#565f89`, so
+  they read as a quiet "what's here" hint. Map (nf-md where possible): `node`
+  `󰎙`, `python` `󰌠`, `docker` `󰡨`, `git` `󰊢`, `go` `󰟓`, `psql/mysql` `󰆼`,
+  `nvim/vim` ``, fallback `󰆍`. Claude's version-string panes are skipped
+  (their state icons cover them), detected by a stamped `@claude-state` or a
+  `N.N…` command.
+- **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
+  (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.
+- A session with no Claude shows only its running count; an idle Claude still
+  counts toward `running` (it is a live process).
 
 ## Error handling / edge cases
 

@@ -101,7 +101,12 @@
       {
         "matcher": "",
         "hooks": [
-          { "type": "command", "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'" },
+          { "type": "command", "command": "osascript -e 'display notification \"Claude Code needs your attention\" with title \"Claude Code\"'" }
+        ]
+      },
+      {
+        "matcher": "permission_prompt|agent_needs_input|elicitation_dialog",
+        "hooks": [
           { "type": "command", "command": "\"${CLAUDE_CONFIG_DIR:-$HOME/.claude}\"/hooks/tmux-state.sh awaiting" }
         ]
       }

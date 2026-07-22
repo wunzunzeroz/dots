@@ -95,11 +95,16 @@ window renumbering.
 | `SessionStart` | `idle` | Claude present; marks the pane immediately, before the first prompt |
 | `UserPromptSubmit` | `working` | prompt submitted; Claude is busy |
 | `Stop` | `idle` | turn finished; quietly waiting for you |
-| `Notification` | `awaiting` | needs you now — permission prompt / attention |
+| `Notification` (matcher `permission_prompt\|agent_needs_input\|elicitation_dialog`) | `awaiting` | genuinely needs you — a permission prompt or a request for input |
 | `PostToolUse` (matcher `""`) | `working` | accuracy refinement — re-stamps working after a granted permission |
 
-- The `Notification` entry **extends** the existing hook (which pops an
-  osascript notification); both commands run, the osascript one is unchanged.
+- The `Notification` awaiting-stamp is **scoped by `notification_type`** so it
+  fires only when Claude is actually blocked on the user. Claude Code fires
+  `Notification` for eight types; the routine `idle_prompt` (the ~60s
+  "waiting for your input" timeout) is deliberately excluded — otherwise every
+  finished-and-idle session decays into `awaiting` after a minute and floods
+  "needs attention". The unscoped osascript notification is a **separate**
+  matcher (`""`) that still pops for all notifications, unchanged.
 - The broad `PostToolUse` → `working` is a **second, separate** `PostToolUse`
   entry. The existing `Edit|Write` prettier hook is left untouched.
 - Command form (matches the `statusLine` convention already in the file):

@@ -22,7 +22,7 @@ if command -v fzf >/dev/null 2>&1; then
             | awk -f "$ANNOTATE" \
             | sort -t"$TAB" -k1,1n -k2,2n \
             | cut -f3- \
-            | fzf --delimiter="$TAB" --with-nth=2.. \
+            | fzf --ansi --delimiter="$TAB" --with-nth=2.. \
                   --header='󰮪 Switch session' --border-label=' sessions '
     )
     session=$(printf '%s' "$line" | cut -f1)

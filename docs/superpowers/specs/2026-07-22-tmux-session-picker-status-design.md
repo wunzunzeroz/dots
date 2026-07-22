@@ -164,20 +164,23 @@ Per session, accumulate: `running` (busy count), and counts of `working` /
   `--delimiter '\t' --with-nth 2..`; selection is extracted with `cut -f1`. This
   replaces the brittle `cut -d: -f1` and is robust to spaces/colons in names.
 
-Line format (columns aligned with `printf`; state written as words rather than
-glyphs — emoji render at inconsistent widths in the terminal, and words read
-more clearly):
+Line format (columns aligned with `printf`). Each state is a Nerd Font icon +
+count + word, colourised via ANSI SGR (fzf gets `--ansi`). Nerd Font icons are
+used rather than emoji because emoji render at inconsistent widths; the icons
+are single-width in the configured font (same family as the statusbar glyphs):
 
 ```
-LOGBOOK      1 running   1 awaiting
-INFOSEC      3 running   2 awaiting
-HQ           2 running   1 working
-DEV          2 running   1 working, 1 idle
+DEV          4 running   󰂚 1 awaiting
+LOGBOOK      3 running   󰥔 1 working
+HQ           4 running   󰥔 2 working, 󰒲 1 idle
+INFOSEC      3 running
 ADMIRAL      2 running
 ```
 
-- State words: `N awaiting` · `N working` · `N idle`, comma-joined when a
-  session has more than one. Awaiting sessions still float to the top.
+- `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
+  (cyan `#7dcfff`) · `󰒲` snooze = idle (muted `#565f89`). Colours mirror
+  `tmux/conf/theme.conf`. Multiple states are comma-joined; awaiting sessions
+  still float to the top.
 - A session with no Claude shows only its running count.
 - An idle Claude is a live process, so it is included in `running`
   (e.g. `DEV` above: 2 running = one working Claude + one idle Claude).

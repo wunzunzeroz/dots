@@ -198,7 +198,8 @@ keeping them last means nothing that must align sits after them.
 - **Programs (trailing):** deduped non-Claude commands as `icon count`, muted
   `#565f89`, a quiet "what's here" hint. Map (nf-md where possible): `node`
   `󰎙`, `python` `󰌠`, `docker` `󰡨`, `git` `󰊢`, `go` `󰟓`, `psql/mysql` `󰆼`,
-  `nvim/vim` ``, fallback `󰆍`. Claude's version-string panes are skipped
+  `nvim/vim` `󰏫` (pencil — the font lacks a vim glyph), fallback `󰆍`. Claude's
+  version-string panes are skipped
   (their state icons cover them), detected by a stamped `@claude-state` or a
   `N.N…` command.
 - A session with no Claude shows only its running count; an idle Claude still

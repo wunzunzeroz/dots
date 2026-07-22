@@ -37,7 +37,7 @@ BEGIN {
   ic["git"]   = "󰊢"
   ic["go"]    = "󰟓"
   ic["psql"]  = "󰆼"; ic["mysql"] = "󰆼"; ic["postgres"] = "󰆼"
-  ic["nvim"]  = ""; ic["vim"] = ""
+  ic["nvim"]  = "󰏫"; ic["vim"] = "󰏫"       # pencil (nf-md; font lacks a vim glyph)
   ic_def      = "󰆍"                     # console (fallback)
 }
 

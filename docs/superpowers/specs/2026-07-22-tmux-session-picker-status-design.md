@@ -179,8 +179,8 @@ window_index <tab> display`; the picker sorts by `group,rank,sub`.
   in exactly one group (current wins over awaiting).
 - **`sub`** orders rows within a session: `0` for the session row,
   `window_index + 1` for window rows, so windows follow their session in index
-  order. Window rows are emitted only when `window_count > 1` (a lone window
-  would just restate the session row).
+  order. Every session lists all its windows — even single-window ones — so the
+  layout is uniform: session rows are bare headers, window rows hold the detail.
 - **Section headers** (`─ needs attention ─`, `─ recent ─`) are emitted for each
   non-empty non-current group with `rank 0`. Header rows carry an **empty
   session field**, so selecting one is a no-op (the picker's `[ -z ] && continue`
@@ -195,16 +195,18 @@ Per-window stats reuse the same renderer as the session row. State labels come
 The program strip trails last because its icons render at unpredictable widths —
 keeping them last means nothing that must align sits after them.
 
-A **multi-window session row is a bare header** — just the name; its window rows
-below carry the window names and stats. A **single-window session has no window
-row**, so its session row carries the active-window name and the stats itself.
+Every **session row is a bare header** — just the name (and `●` for the current
+session). All the detail — window names and per-window stats — lives in the
+window rows beneath it. Selecting a header switches to the session (its active
+window); selecting a window row switches and `select-window`s into that window.
 
 ```
 ● HQ
     1         HQ                󰜎 2 running   󰒲 1 idle                󰏫 1
   > 2         HQ-CLI            󰜎 2 running   󰥔 2 working
 ─ recent ─
-  DEV         CLAUDE HARNESS    󰜎 2 running   󰒲 2 idle
+  DEV
+  > 1         CLAUDE HARNESS    󰜎 2 running   󰒲 2 idle
   LOGBOOK
   > 1         SMART FIELDS      󰜎 2 running   󰒲 1 idle                󰏫 1
     2         WEATHER           󰜎 1 running   󰎙 1
@@ -212,16 +214,10 @@ row**, so its session row carries the active-window name and the stats itself.
 
 - **Current marker:** `●` in purple `#bb9af7` (the active-pane colour) on the
   pinned top row.
-- **Window rows:** window index + name, indented; the session's **active**
-  window is marked `>` in purple, others muted. `select-window` targets by
-  index (`session:index`), so window names with colons/spaces are unambiguous.
-- **Active window (session row):** shown **only for single-window sessions**,
-  where no window row carries it — the session's current window name
-  (`#{window_name}` on `list-sessions` resolves to the active window), in blue
-  `#7aa2f7`. Multi-window session rows blank this column (the name would just
-  duplicate the `>`-marked window row below); the column stays reserved at a
-  fixed 32 cols so session-row and window-row stats still align. Plain text
-  pads reliably; long names truncate with `…`.
+- **Window rows:** window index + name (blue, truncated to a fixed 32 cols),
+  indented; the session's **active** window is marked `>` in purple, others
+  muted. `select-window` targets by index (`session:index`), so window names
+  with colons/spaces are unambiguous.
 - **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
 - **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
   (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.

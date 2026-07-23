@@ -29,7 +29,7 @@ if command -v fzf >/dev/null 2>&1; then
         {
             tmux list-panes -a -F "P${TAB}#{session_name}${TAB}#{window_index}${TAB}#{pane_current_command}${TAB}#{@claude-state}" 2>/dev/null
             tmux list-windows -a -F "W${TAB}#{session_name}${TAB}#{window_index}${TAB}#{window_name}${TAB}#{window_active}" 2>/dev/null
-            tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}${TAB}#{window_name}" 2>/dev/null \
+            tmux list-sessions -F "#{session_last_attached}${TAB}S${TAB}#{session_name}" 2>/dev/null \
                 | sort -rn | cut -f2-
         } \
             | awk -v cur="$CURRENT" -f "$ANNOTATE" \

@@ -93,41 +93,30 @@ $1 == "W" {
   wname[sess, widx]   = $4
   wactive[sess, widx] = $5
   wlist[sess] = wlist[sess] (wlist[sess] == "" ? "" : SUBSEP) widx
-  wcount[sess]++
   next
 }
 
 $1 == "S" {
-  sess = $2; awin = $3
+  sess = $2
   rank++
   if (sess == cur)          g = 0
   else if (await[sess] > 0) g = 1
   else                      g = 2
   seen[g] = 1
 
+  # Every session row is a bare header; its window rows carry the detail.
   mark = (g == 0) ? (c_cur "●" reset " ") : "  "
-  if (wcount[sess] > 1) {
-    # Multi-window: a bare header. Its window rows carry the name and stats.
-    line = mark sess
-  } else {
-    # Single-window: no window row exists, so the session row carries the
-    # active-window name and its stats itself.
-    line = mark sprintf("%-12s ", sess) c_win sprintf("%-" WINW "s", trunc(awin)) reset "  " stats(sess)
-  }
-  print g, rank, 0, sess, "", line
+  print g, rank, 0, sess, "", mark sess
 
-  # Window rows only when there is more than one -- a lone window would just
-  # restate the session row.
-  if (wcount[sess] > 1) {
-    wn = split(wlist[sess], warr, SUBSEP)
-    for (wi = 1; wi <= wn; wi++) {
-      w = warr[wi]
-      # ASCII marker: it pads predictably, unlike a multi-byte glyph.
-      idx = (wactive[sess, w] == "1" ? "  > " : "    ") w
-      wrow = "  " (wactive[sess, w] == "1" ? c_cur : c_muted) sprintf("%-12s", idx) reset " " \
-             c_win sprintf("%-" WINW "s", trunc(wname[sess, w])) reset "  " stats(sess SUBSEP w)
-      print g, rank, w + 1, sess, w, wrow
-    }
+  # List every window beneath the header, with its own name and stats.
+  wn = split(wlist[sess], warr, SUBSEP)
+  for (wi = 1; wi <= wn; wi++) {
+    w = warr[wi]
+    # ASCII marker: it pads predictably, unlike a multi-byte glyph.
+    idx = (wactive[sess, w] == "1" ? "  > " : "    ") w
+    wrow = "  " (wactive[sess, w] == "1" ? c_cur : c_muted) sprintf("%-12s", idx) reset " " \
+           c_win sprintf("%-" WINW "s", trunc(wname[sess, w])) reset "  " stats(sess SUBSEP w)
+    print g, rank, w + 1, sess, w, wrow
   }
 }
 

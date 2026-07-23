@@ -201,19 +201,22 @@ window rows beneath it. Selecting a header switches to the session (its active
 window); selecting a window row switches and `select-window`s into that window.
 
 ```
-● HQ
+● HQ ──────────────────────────────────────────────
     1         HQ                󰜎 2 running   󰒲 1 idle                󰏫 1
   > 2         HQ-CLI            󰜎 2 running   󰥔 2 working
 ─ recent ─
-  DEV
+  DEV ─────────────────────────────────────────────
   > 1         CLAUDE HARNESS    󰜎 2 running   󰒲 2 idle
-  LOGBOOK
+  LOGBOOK ─────────────────────────────────────────
   > 1         SMART FIELDS      󰜎 2 running   󰒲 1 idle                󰏫 1
     2         WEATHER           󰜎 1 running   󰎙 1
 ```
 
 - **Current marker:** `●` in purple `#bb9af7` (the active-pane colour) on the
   pinned top row.
+- **Header rule:** each session name is followed by a muted `─` rule that
+  right-aligns to a fixed column (`HDRW`), giving each session a section-header
+  look. The rule length is `HDRW − len(name) − 3`, clamped to ≥ 3.
 - **Window rows:** window index + name (blue, truncated to a fixed 32 cols),
   indented; the session's **active** window is marked `>` in purple, others
   muted. `select-window` targets by index (`session:index`), so window names

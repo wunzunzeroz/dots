@@ -70,6 +70,7 @@ BEGIN {
   ic["nvim"]  = "󰏫"; ic["vim"] = "󰏫"    # pencil (nf-md; font lacks a vim glyph)
   ic_def      = "󰆍"                     # console (fallback)
   WINW = 32                             # window-name column width
+  HDRW = 56                             # session-header rule ends at this column
 }
 
 $1 == "P" {
@@ -104,9 +105,12 @@ $1 == "S" {
   else                      g = 2
   seen[g] = 1
 
-  # Every session row is a bare header; its window rows carry the detail.
+  # Every session row is a bare header (name + a rule); windows carry the detail.
   mark = (g == 0) ? (c_cur "●" reset " ") : "  "
-  print g, rank, 0, sess, "", mark sess
+  rulen = HDRW - length(sess) - 3       # 3 = marker (2) + a space before the rule
+  if (rulen < 3) rulen = 3
+  rule = ""; while (rulen-- > 0) rule = rule "─"
+  print g, rank, 0, sess, "", mark sess " " c_muted rule reset
 
   # List every window beneath the header, with its own name and stats.
   wn = split(wlist[sess], warr, SUBSEP)

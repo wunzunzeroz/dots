@@ -106,12 +106,14 @@ $1 == "S" {
   seen[g] = 1
 
   mark = (g == 0) ? (c_cur "●" reset " ") : "  "
-  # Show the active-window name on the session row only when there are no window
-  # rows to carry it (single-window). Multi-window sessions list it below, so
-  # blank it here to drop the duplicate — the column stays reserved for alignment.
-  awincell = (wcount[sess] > 1) ? sprintf("%-" WINW "s", "") \
-                                : c_win sprintf("%-" WINW "s", trunc(awin)) reset
-  line = mark sprintf("%-12s ", sess) awincell "  " stats(sess)
+  if (wcount[sess] > 1) {
+    # Multi-window: a bare header. Its window rows carry the name and stats.
+    line = mark sess
+  } else {
+    # Single-window: no window row exists, so the session row carries the
+    # active-window name and its stats itself.
+    line = mark sprintf("%-12s ", sess) c_win sprintf("%-" WINW "s", trunc(awin)) reset "  " stats(sess)
+  }
   print g, rank, 0, sess, "", line
 
   # Window rows only when there is more than one -- a lone window would just

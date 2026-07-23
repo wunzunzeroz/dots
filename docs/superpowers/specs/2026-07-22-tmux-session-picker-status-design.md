@@ -195,12 +195,17 @@ Per-window stats reuse the same renderer as the session row. State labels come
 The program strip trails last because its icons render at unpredictable widths —
 keeping them last means nothing that must align sits after them.
 
+A **multi-window session row is a bare header** — just the name; its window rows
+below carry the window names and stats. A **single-window session has no window
+row**, so its session row carries the active-window name and the stats itself.
+
 ```
-● HQ          HQ-CLI            󰜎 4 running   󰥔 2 working, 󰒲 1 idle   󰏫 1
+● HQ
     1         HQ                󰜎 2 running   󰒲 1 idle                󰏫 1
   > 2         HQ-CLI            󰜎 2 running   󰥔 2 working
 ─ recent ─
-  LOGBOOK     SMART FIELDS      󰜎 3 running   󰒲 2 idle                󰏫 1
+  DEV         CLAUDE HARNESS    󰜎 2 running   󰒲 2 idle
+  LOGBOOK
   > 1         SMART FIELDS      󰜎 2 running   󰒲 1 idle                󰏫 1
     2         WEATHER           󰜎 1 running   󰎙 1
 ```

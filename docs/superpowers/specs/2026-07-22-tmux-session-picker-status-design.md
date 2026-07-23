@@ -210,9 +210,13 @@ keeping them last means nothing that must align sits after them.
 - **Window rows:** window index + name, indented; the session's **active**
   window is marked `>` in purple, others muted. `select-window` targets by
   index (`session:index`), so window names with colons/spaces are unambiguous.
-- **Active window (session row):** the session's current window name
+- **Active window (session row):** shown **only for single-window sessions**,
+  where no window row carries it — the session's current window name
   (`#{window_name}` on `list-sessions` resolves to the active window), in blue
-  `#7aa2f7`. Padded/truncated to a fixed 32 columns — plain text pads reliably.
+  `#7aa2f7`. Multi-window session rows blank this column (the name would just
+  duplicate the `>`-marked window row below); the column stays reserved at a
+  fixed 32 cols so session-row and window-row stats still align. Plain text
+  pads reliably; long names truncate with `…`.
 - **Running:** `󰜎` + total busy-pane count, in muted `#565f89`.
 - **Claude state:** `󰂚` bell = awaiting (yellow `#e0af68`) · `󰥔` clock = working
   (cyan `#7dcfff`) · `󰒲` snooze = idle (muted). Multiple states comma-joined.

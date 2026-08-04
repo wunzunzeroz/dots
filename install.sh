@@ -43,6 +43,7 @@ LINKS=(
   ".claude/agent-memory      claude/agent-memory"
   ".claude/agents            claude/agents"
   ".claude/hooks             claude/hooks"
+  ".claude/skills            claude/skills"
   ".claude/plugins/claude-hud/config.json claude/plugins/claude-hud/config.json"
 )
 

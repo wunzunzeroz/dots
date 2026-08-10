@@ -163,6 +163,7 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "editorMode": "vim",
+  "vimInsertModeRemaps": { "jk": "<Esc>" },
   "skipAutoPermissionPrompt": true,
   "voiceEnabled": true,
   "effort": "high",

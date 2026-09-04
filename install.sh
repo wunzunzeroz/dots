@@ -39,12 +39,6 @@ LINKS=(
   ".zsh/conf                 zsh/conf"
   ".tmux/conf                tmux/conf"
   ".tmux/scripts             tmux/scripts"
-  ".claude/settings.json     claude/settings.json"
-  ".claude/agent-memory      claude/agent-memory"
-  ".claude/agents            claude/agents"
-  ".claude/hooks             claude/hooks"
-  ".claude/skills            claude/skills"
-  ".claude/plugins/claude-hud/config.json claude/plugins/claude-hud/config.json"
 )
 
 link() {

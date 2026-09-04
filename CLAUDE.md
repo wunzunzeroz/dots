@@ -14,7 +14,6 @@ everything into `$HOME`.
 |------|------|
 | `aerospace/` | Aerospace WM |
 | `bin/` | Personal binaries (boot) |
-| `claude/` | Claude Code config (symlinked into `~/.claude/`) |
 | `docs/superpowers/` | Specs and plans for in-flight work |
 | `docs/superpowers/archive/` | Shipped specs/plans — read-only history |
 | `ghostty/`, `tmux/`, `zed/`, `zsh/` | Self-explanatory |
